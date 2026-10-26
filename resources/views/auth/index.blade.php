@@ -3,16 +3,6 @@
 @section('title', $register ? 'Daftar — Career Compass' : 'Selamat datang — Career Compass')
 
 @section('auth-content')
-    @auth('web')
-        <h2 id="auth-title">Selamat datang,<br><span class="welcome-name">{{ auth('web')->user()->name }}.</span></h2>
-        <p class="card-subtitle">Langkah kecilmu dimulai di sini.</p>
-        <div class="auth-notice auth-notice--success" role="status">{{ session('status', 'Kamu sudah masuk ke akun Career Compass.') }}</div>
-        <p class="signed-in-email">{{ auth('web')->user()->email }}</p>
-        <form action="{{ route('logout') }}" method="POST">
-            @csrf
-            <button class="primary-button" type="submit">Keluar dari akun <x-arrow /></button>
-        </form>
-    @else
         <h2 id="auth-title">{{ $register ? 'Mulai langkahmu' : 'Selamat datang' }}</h2>
         <p class="card-subtitle">{{ $register ? 'Buat akun untuk menemukan arahmu.' : 'Masuk untuk melanjutkan' }}</p>
 
@@ -52,5 +42,4 @@
             {{ $register ? 'Sudah punya akun?' : 'Belum punya akun?' }}
             <a href="{{ $register ? route('login').'#auth-card' : route('register').'#auth-card' }}">{{ $register ? 'Masuk sekarang' : 'Daftar sekarang' }}</a>
         </p>
-    @endauth
 @endsection

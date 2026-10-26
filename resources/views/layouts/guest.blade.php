@@ -15,7 +15,7 @@
     <a class="skip-link" href="#auth-card">Langsung ke formulir</a>
     <header class="site-header">
         <nav class="header-inner" aria-label="Navigasi utama">
-            <a class="brand" href="{{ route('home') }}" aria-label="Career Compass — Beranda">
+            <a class="brand" href="{{ route('landing') }}" aria-label="Career Compass — Beranda">
                 <span class="brand-mark"><x-compass /></span>
                 <span>career compass</span>
             </a>

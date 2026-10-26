@@ -17,13 +17,21 @@ use Illuminate\View\View;
 
 class AuthenticationController extends Controller
 {
-    public function loginPage(): View
+    public function loginPage(): View|RedirectResponse
     {
+        if (Auth::guard('web')->check()) {
+            return redirect()->route('home');
+        }
+
         return view('auth.index', ['register' => false]);
     }
 
-    public function registerPage(): View
+    public function registerPage(): View|RedirectResponse
     {
+        if (Auth::guard('web')->check()) {
+            return redirect()->route('home');
+        }
+
         return view('auth.index', ['register' => true]);
     }
 
@@ -60,7 +68,7 @@ class AuthenticationController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('home')->with('status', 'Kamu sudah keluar dari akun.');
+        return redirect()->route('landing')->with('status', 'Kamu sudah keluar dari akun.');
     }
 
     private function authenticated(Request $request, string $message): JsonResponse|RedirectResponse
