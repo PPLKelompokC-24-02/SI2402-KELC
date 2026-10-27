@@ -29,7 +29,11 @@ foreach ($attributes->all() as $__key => $__value) {
 unset($__defined_vars, $__key, $__value); ?>
 <svg <?php echo e($attributes->merge(['viewBox' => '0 0 24 24', 'fill' => 'none', 'stroke' => 'currentColor', 'stroke-width' => '1.6', 'stroke-linecap' => 'round', 'stroke-linejoin' => 'round', 'aria-hidden' => 'true'])); ?>>
     <?php switch($name):
-        case ('back'): ?> <path d="m10 5-7 7 7 7M3 12h18" /> <?php break; ?>
+        case ('data'): ?> <rect x="3" y="3" width="18" height="18" rx="3" /><path d="M7 16v-4m5 4V8m5 8v-6" /> <?php break; ?>
+        <?php case ('code'): ?> <rect x="2" y="4" width="20" height="16" rx="3" /><path d="m8 9-3 3 3 3m8-6 3 3-3 3m-5 1 2-8" /> <?php break; ?>
+        <?php case ('design'): ?> <path d="M4 20h4L21 7l-4-4L4 16v4Zm10-14 4 4M3 4h5M3 8h3" /> <?php break; ?>
+        <?php case ('check'): ?> <path d="m5 12 4 4L19 6" /> <?php break; ?>
+        <?php case ('back'): ?> <path d="m10 5-7 7 7 7M3 12h18" /> <?php break; ?>
         <?php case ('image'): ?> <rect x="3" y="3" width="18" height="18" rx="2" /><circle cx="8" cy="8" r="1.5" /><path d="m3 17 6-6 4 4 3-3 5 5" /> <?php break; ?>
         <?php case ('plus'): ?> <path d="M12 5v14M5 12h14" /> <?php break; ?>
         <?php case ('search'): ?> <circle cx="10.5" cy="10.5" r="6.5" /><path d="m16 16 5 5" /> <?php break; ?>

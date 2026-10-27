@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Web\Admin\ProfessionController;
 use App\Http\Controllers\Web\AuthenticationController;
+use App\Http\Controllers\Web\CareerExplorationController;
 use App\Http\Controllers\Web\HomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -17,6 +18,14 @@ Route::middleware('guest:web')->group(function () {
 Route::post('/logout', [AuthenticationController::class, 'logout'])->middleware('auth:web')->name('logout');
 
 Route::get('/home', HomeController::class)->middleware(['auth:web', 'role:mahasiswa,admin,assessor'])->name('home');
+
+Route::middleware(['auth:web', 'role:mahasiswa'])->name('careers.')->group(function () {
+    Route::get('career-exploration', [CareerExplorationController::class, 'index'])->name('index');
+    Route::get('professions', [CareerExplorationController::class, 'professions'])->name('professions.index');
+    Route::get('professions/{profession}', [CareerExplorationController::class, 'show'])->whereNumber('profession')->name('show');
+    Route::get('professions/{profession}/illustration', [CareerExplorationController::class, 'illustration'])->whereNumber('profession')->name('illustration');
+    Route::get('professions/{profession}/tools/{key}/logo', [CareerExplorationController::class, 'toolLogo'])->whereNumber('profession')->whereUuid('key')->name('tool-logo');
+});
 
 Route::prefix('admin')->name('admin.')->middleware(['auth:web', 'role:admin'])->group(function () {
     Route::get('professions/{profession}/illustration', [ProfessionController::class, 'illustration'])->whereNumber('profession')->name('professions.illustration');

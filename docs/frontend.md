@@ -30,7 +30,7 @@ Buka `http://127.0.0.1:8000/` untuk landing page dengan login, `/login` untuk UR
 
 Seluruh menu didefinisikan di `config/navigation.php`. `App\Support\Navigation` hanya mengaktifkan item jika named route web dengan HTTP method yang sesuai benar-benar tersedia. Route API tidak dijadikan tautan halaman. Menu yang belum tersedia ditampilkan sebagai teks `aria-disabled="true"` dengan label **Segera Hadir**, tanpa `href`.
 
-Frontend US-11 tersedia di `/admin/professions` dan terhubung ke menu **Manajemen Profesi** Admin. Frontend US-12 belum tersedia sehingga menu Career Exploration masih dinonaktifkan. Saat frontend mahasiswa tersedia, gunakan named route `careers.index` untuk `/professions`, atau sesuaikan nama route di konfigurasi. Konfigurasi menu bukan pengganti authorization.
+Frontend US-11 tersedia di `/admin/professions` dan terhubung ke menu **Manajemen Profesi** Admin. Frontend US-12 tersedia di `/career-exploration` (named route `careers.index`) dan terhubung ke menu **Career Exploration & Career Path** Mahasiswa. Daftar lengkap berada di `/professions`. Konfigurasi menu bukan pengganti authorization.
 
 Sidebar dapat ditutup pada desktop dan pilihannya disimpan di localStorage hanya sebagai preferensi UI. Pada layar hingga 900 px, sidebar menjadi drawer dengan backdrop, focus trap, tombol tutup, serta dukungan Escape. Dropdown profil menampilkan nama, email, role, dan POST logout. Beranda tetap berupa welcome card tanpa statistik atau grafik.
 
@@ -49,9 +49,23 @@ Nama profesi wajib dan unik, termasuk pada draf. Penerbitan memerlukan kategori,
 
 Simpan Draf membuat profesi tidak tampil di katalog mahasiswa. Penonaktifan mempertahankan baris profesi, pivot kompetensi, dan berkas. Penggantian gambar atau penghapusan tool membersihkan berkas lama sesudah penyimpanan berhasil. Data profesi dan relasinya disimpan dalam transaksi.
 
-Integrasi backend mempertahankan endpoint REST yang sudah ada. Model dan skema diperluas untuk isian low-fi; query/policy katalog mahasiswa mengecualikan draf, dan resource API Admin menangani kategori kosong pada draf. Kontrak field inti API lama tetap berlaku. Metadata editor tambahan saat ini ditampilkan di frontend Admin; tampilan mahasiswa dapat menggunakannya pada US-12 berikutnya.
+Integrasi backend mempertahankan endpoint REST yang sudah ada. Model dan skema diperluas untuk isian low-fi; query/policy katalog mahasiswa mengecualikan draf, dan resource API Admin menangani kategori kosong pada draf. Kontrak field inti API lama tetap berlaku. Metadata editor tambahan ditampilkan pada frontend Admin dan detail profesi Mahasiswa di US-12.
 
 Seluruh route editor, gambar, dan logo dilindungi `auth:web`, `role:admin`, serta policy profesi. Mahasiswa dan Assessor tidak dapat mengakses atau mengubah data lewat editor ini. Tidak ada perubahan pada autentikasi atau penilaian assessment.
+
+## US-12 — Mahasiswa menjelajahi profesi
+
+- `/career-exploration`: halaman eksplorasi dengan pencarian, kategori dari master data, dan tiga pilihan profesi. Pilihan ini merupakan daftar umum berdasarkan nama, bukan rekomendasi personal atau hasil assessment.
+- `/professions`: katalog dengan pencarian nama (`keyword`), filter kategori (`category`), dan pagination. Ukuran halaman default 10, dapat diatur dengan `per_page` dalam rentang 1–100.
+- `/professions/{id}`: detail profesi. Parameter `tab` memilih `overview`, `responsibilities`, `competencies`, `path`, `courses`, atau `tools`.
+
+Ketiga halaman memakai shared layout aplikasi, Blade, dan CSS `public/css/careers.css`. Navigasi pencarian, kategori, pagination, dan bagian detail memakai GET biasa sehingga tetap berfungsi tanpa JavaScript. Kata kunci dan kategori tetap dibawa saat berganti halaman serta kembali dari detail.
+
+Hanya profesi dengan `is_active=true` dan `publication_status=published` yang dapat dilihat. Draf dan profesi nonaktif mengembalikan 404 pada detail, ilustrasi, serta logo tool. Semua route US-12 dilindungi `auth:web`, `role:mahasiswa`, dan policy profesi; tidak ada kewajiban menyelesaikan assessment. Endpoint API dan editor Admin tidak diubah oleh fitur ini, dan tidak ada migrasi baru.
+
+Konten detail mengambil deskripsi, prospek, industri, tanggung jawab, kompetensi, ilustrasi, dan tools dari data US-11. Jika ilustrasi belum tersedia, kartu menampilkan ikon visual lokal sesuai bidang profesi. Logo tool yang belum tersedia memakai ikon netral, tanpa mengambil logo dari sumber eksternal. Gambar tersimpan di disk `local` dilayani lewat route khusus mahasiswa yang memeriksa visibilitas profesi pada setiap request.
+
+Bagian **Mata Kuliah** menampilkan **Data belum tersedia**. **Jalur Karier** menampilkan rentang jenjang awal–akhir jika telah diisi Admin; tahapan jabatan dan durasi pengalaman belum tersedia dan tidak dibuat-buat. Fitur simpan/favorit pada low-fi tidak ditambahkan karena berada di user story terpisah. Data lama yang belum memiliki metadata tambahan tetap bisa dibaca dengan empty state yang jelas.
 
 ## Pengujian
 
@@ -61,6 +75,6 @@ php artisan view:cache
 vendor/bin/pint --test
 ```
 
-`WebAuthenticationTest` memeriksa render halaman, validasi, session login, remember cookie, registrasi mahasiswa, penolakan perubahan role, fallback tanpa JavaScript, rate limit, dan logout. `HomeTest` memeriksa redirect seluruh role, layout yang sama, isolasi menu, middleware, navigasi yang aman, dan logout. Pengujian berjalan menggunakan SQLite in-memory sesuai `phpunit.xml`.
+`WebAuthenticationTest` memeriksa autentikasi browser; `HomeTest` memeriksa layout, role, dan navigasi; `AdminProfessionWebTest` memeriksa editor US-11; `CareerExplorationWebTest` memeriksa pencarian/filter/pagination, konten dan empty state US-12, visibilitas draf, akses media, authorization, serta escaping output. Pengujian cepat memakai SQLite in-memory sesuai `phpunit.xml`.
 
 Implementasi session mengikuti dokumentasi resmi [authentication Laravel](https://laravel.com/docs/13.x/authentication) dan [CSRF protection](https://laravel.com/docs/13.x/csrf).
