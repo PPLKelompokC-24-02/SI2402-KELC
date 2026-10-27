@@ -9,6 +9,7 @@
     <link rel="icon" href="{{ asset('images/compass.svg') }}" type="image/svg+xml">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}?v={{ filemtime(public_path('css/app.css')) }}">
     <script src="{{ asset('js/app.js') }}?v={{ filemtime(public_path('js/app.js')) }}" defer></script>
+    @stack('head')
 </head>
 <body class="app-shell">
     <a class="skip-link" href="#main-content">Langsung ke konten</a>

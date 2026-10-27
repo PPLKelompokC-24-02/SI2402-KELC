@@ -1,6 +1,10 @@
 @props(['name'])
 <svg {{ $attributes->merge(['viewBox' => '0 0 24 24', 'fill' => 'none', 'stroke' => 'currentColor', 'stroke-width' => '1.6', 'stroke-linecap' => 'round', 'stroke-linejoin' => 'round', 'aria-hidden' => 'true']) }}>
     @switch($name)
+        @case('back') <path d="m10 5-7 7 7 7M3 12h18" /> @break
+        @case('image') <rect x="3" y="3" width="18" height="18" rx="2" /><circle cx="8" cy="8" r="1.5" /><path d="m3 17 6-6 4 4 3-3 5 5" /> @break
+        @case('plus') <path d="M12 5v14M5 12h14" /> @break
+        @case('search') <circle cx="10.5" cy="10.5" r="6.5" /><path d="m16 16 5 5" /> @break
         @case('home') <path d="m3 10 9-7 9 7v10H3V10Z" /><path d="M9 20v-7h6v7" /> @break
         @case('user') <circle cx="12" cy="8" r="3.5" /><path d="M5 21v-2a7 7 0 0 1 14 0v2" /> @break
         @case('users') <circle cx="9" cy="8" r="3" /><path d="M3 21v-2a6 6 0 0 1 12 0v2M16 5a3 3 0 0 1 0 6m3 10v-2a6 6 0 0 0-3-5" /> @break

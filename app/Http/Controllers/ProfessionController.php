@@ -13,7 +13,7 @@ class ProfessionController extends Controller
     public function index(CatalogRequest $request): AnonymousResourceCollection
     {
         Gate::authorize('viewAny', Profession::class);
-        $professions = Profession::with(['careerCategory', 'competencies'])->where('is_active', true)
+        $professions = Profession::with(['careerCategory', 'competencies'])->where('is_active', true)->where('publication_status', 'published')
             ->when($request->filled('keyword'), fn ($query) => $query->whereLike('name', '%'.$request->validated('keyword').'%'))
             ->orderBy('name')->orderBy('id')
             ->paginate($request->integer('per_page', 15))->withQueryString();
@@ -23,7 +23,7 @@ class ProfessionController extends Controller
 
     public function show(int $profession): ProfessionResource
     {
-        $profession = Profession::with(['careerCategory', 'competencies'])->where('is_active', true)->findOrFail($profession);
+        $profession = Profession::with(['careerCategory', 'competencies'])->where('is_active', true)->where('publication_status', 'published')->findOrFail($profession);
         Gate::authorize('view', $profession);
 
         return (new ProfessionResource($profession))->additional(['message' => 'Detail profesi.']);

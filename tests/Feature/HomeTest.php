@@ -5,7 +5,6 @@ namespace Tests\Feature;
 use App\Models\Role;
 use App\Models\User;
 use App\Support\Navigation;
-use Illuminate\Support\Facades\Route;
 use PHPUnit\Framework\Attributes\DataProvider;
 
 class HomeTest extends ApiTestCase
@@ -73,7 +72,7 @@ class HomeTest extends ApiTestCase
         $sections = Navigation::forRole($role);
         foreach ($sections as $section) {
             foreach ($section['items'] as $item) {
-                if (in_array($item['route'], ['home', 'logout'], true)) {
+                if (in_array($item['route'], ['home', 'logout', 'admin.professions.index'], true)) {
                     $this->assertNotNull($item['url']);
                 } else {
                     $this->assertNull($item['url']);
@@ -86,11 +85,9 @@ class HomeTest extends ApiTestCase
 
     public function test_frontend_route_can_be_connected_using_navigation_configuration(): void
     {
-        Route::middleware(['web', 'auth:web', 'role:admin'])->get('/admin/professions', fn () => 'Existing profession frontend')->name('admin.professions.index');
-        Route::getRoutes()->refreshNameLookups();
         $this->actingAs($this->user('admin'), 'web')->get('/home')
             ->assertSee('href="'.url('/admin/professions').'"', false);
-        $this->get('/admin/professions')->assertOk();
+        $this->get('/admin/professions')->assertOk()->assertSee('Tambah Profesi');
         $this->actingAs($this->user(), 'web')->get('/admin/professions')->assertForbidden();
     }
 
