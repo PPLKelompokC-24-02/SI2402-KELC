@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 320" fill="none">
+  <title>Career Compass</title>
+  <g stroke="#073763" stroke-width="4.5">
+    <circle cx="155" cy="160" r="105"/>
+    <path d="M155 55v15m0 180v15M50 160h15m180 0h15M81 86l10 10m128 128 10 10M81 234l10-10m128-128 10-10" stroke-width="3"/>
+  </g>
+  <path d="m73 241 45-45 27 25L239 78" stroke="#00A8DB" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="m214 76 48-25-15 53-11-23-22-5Z" fill="#00A8DB"/>
+  <g font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="44">
+    <text x="286" y="151" fill="#073763">Career</text>
+    <text x="286" y="204" fill="#00A8DB">Compass</text>
+  </g>
+</svg>
