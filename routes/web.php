@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Web\Admin\CareerEventController;
 use App\Http\Controllers\Web\Admin\ProfessionController;
 use App\Http\Controllers\Web\AuthenticationController;
 use App\Http\Controllers\Web\CareerExplorationController;
@@ -31,4 +32,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:web', 'role:admin'])->
     Route::get('professions/{profession}/illustration', [ProfessionController::class, 'illustration'])->whereNumber('profession')->name('professions.illustration');
     Route::get('professions/{profession}/tools/{key}/logo', [ProfessionController::class, 'toolLogo'])->whereNumber('profession')->whereUuid('key')->name('professions.tool-logo');
     Route::resource('professions', ProfessionController::class)->whereNumber('profession');
+
+    Route::get('events/{event}/poster', [CareerEventController::class, 'poster'])->whereNumber('event')->name('events.poster');
+    Route::resource('events', CareerEventController::class)->whereNumber('event');
 });
