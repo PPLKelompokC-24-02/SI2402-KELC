@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\CareerEvent;
 use App\Models\Profession;
 use App\Models\User;
+use App\Policies\CareerEventPolicy;
 use App\Policies\ProfessionPolicy;
 use App\Policies\UserPolicy;
 use Illuminate\Cache\RateLimiting\Limit;
@@ -28,6 +30,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Gate::policy(Profession::class, ProfessionPolicy::class);
+        Gate::policy(CareerEvent::class, CareerEventPolicy::class);
         Gate::policy(User::class, UserPolicy::class);
         RateLimiter::for('login', fn (Request $request) => [
             Limit::perMinute(30)->by($request->ip()),
