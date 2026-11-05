@@ -4,10 +4,12 @@ namespace App\Providers;
 
 use App\Models\ActionPlan;
 use App\Models\ActionPlanTemplate;
-use App\Models\Profession;
-use App\Models\User;
 use App\Policies\ActionPlanPolicy;
 use App\Policies\ActionPlanTemplatePolicy;
+use App\Models\CareerEvent;
+use App\Models\Profession;
+use App\Models\User;
+use App\Policies\CareerEventPolicy;
 use App\Policies\ProfessionPolicy;
 use App\Policies\UserPolicy;
 use Illuminate\Cache\RateLimiting\Limit;
@@ -32,6 +34,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Gate::policy(Profession::class, ProfessionPolicy::class);
+        Gate::policy(CareerEvent::class, CareerEventPolicy::class);
         Gate::policy(User::class, UserPolicy::class);
         Gate::policy(ActionPlanTemplate::class, ActionPlanTemplatePolicy::class);
         Gate::policy(ActionPlan::class, ActionPlanPolicy::class);

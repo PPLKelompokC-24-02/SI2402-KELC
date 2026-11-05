@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Web\Admin\ActionPlanTemplateController as AdminActionPlanTemplateController;
+use App\Http\Controllers\Web\Admin\CareerEventController;
 use App\Http\Controllers\Web\Admin\ProfessionController;
 use App\Http\Controllers\Web\AuthenticationController;
 use App\Http\Controllers\Web\CareerActionPlanController;
@@ -43,4 +44,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:web', 'role:admin'])->
     Route::resource('professions', ProfessionController::class)->whereNumber('profession');
     Route::post('action-templates/{action_template}/toggle-status', [AdminActionPlanTemplateController::class, 'toggleStatus'])->name('action-templates.toggle-status')->whereNumber('action_template');
     Route::resource('action-templates', AdminActionPlanTemplateController::class)->parameters(['action-templates' => 'action_template'])->whereNumber('action_template');
+
+    Route::get('events/{event}/poster', [CareerEventController::class, 'poster'])->whereNumber('event')->name('events.poster');
+    Route::resource('events', CareerEventController::class)->whereNumber('event');
 });
