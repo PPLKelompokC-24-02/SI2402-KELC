@@ -2,8 +2,12 @@
 
 namespace App\Providers;
 
+use App\Models\ActionPlan;
+use App\Models\ActionPlanTemplate;
 use App\Models\Profession;
 use App\Models\User;
+use App\Policies\ActionPlanPolicy;
+use App\Policies\ActionPlanTemplatePolicy;
 use App\Policies\ProfessionPolicy;
 use App\Policies\UserPolicy;
 use Illuminate\Cache\RateLimiting\Limit;
@@ -29,6 +33,8 @@ class AppServiceProvider extends ServiceProvider
     {
         Gate::policy(Profession::class, ProfessionPolicy::class);
         Gate::policy(User::class, UserPolicy::class);
+        Gate::policy(ActionPlanTemplate::class, ActionPlanTemplatePolicy::class);
+        Gate::policy(ActionPlan::class, ActionPlanPolicy::class);
         RateLimiter::for('login', fn (Request $request) => [
             Limit::perMinute(30)->by($request->ip()),
             Limit::perMinute(5)->by(hash('sha256', mb_strtolower(is_string($request->input('email')) ? trim($request->input('email')) : '').'|'.$request->ip())),
