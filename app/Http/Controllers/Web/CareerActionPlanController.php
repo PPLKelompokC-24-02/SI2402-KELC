@@ -53,4 +53,3 @@ class CareerActionPlanController extends Controller
             ->with('status', 'Aktivitas berhasil dihapus dari Career Action Plan.');
     }
 }
-

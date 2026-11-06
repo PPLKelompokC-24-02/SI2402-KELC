@@ -33,4 +33,3 @@ class ActionPlanTemplatePolicy
         return $user->hasRole(Role::ADMIN);
     }
 }
-

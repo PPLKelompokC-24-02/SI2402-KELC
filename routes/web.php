@@ -6,6 +6,7 @@ use App\Http\Controllers\Web\Admin\ProfessionController;
 use App\Http\Controllers\Web\AuthenticationController;
 use App\Http\Controllers\Web\CareerActionPlanController;
 use App\Http\Controllers\Web\CareerExplorationController;
+use App\Http\Controllers\Web\FavoriteProfessionController;
 use App\Http\Controllers\Web\HomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -29,6 +30,11 @@ Route::middleware(['auth:web', 'role:mahasiswa'])->group(function () {
         Route::get('professions/{profession}', [CareerExplorationController::class, 'show'])->whereNumber('profession')->name('show');
         Route::get('professions/{profession}/illustration', [CareerExplorationController::class, 'illustration'])->whereNumber('profession')->name('illustration');
         Route::get('professions/{profession}/tools/{key}/logo', [CareerExplorationController::class, 'toolLogo'])->whereNumber('profession')->whereUuid('key')->name('tool-logo');
+
+        Route::post('professions/{profession}/favorite', [FavoriteProfessionController::class, 'store'])->whereNumber('profession')->name('favorite.store');
+        Route::delete('professions/{profession}/favorite', [FavoriteProfessionController::class, 'destroy'])->whereNumber('profession')->name('favorite.destroy');
+        Route::post('professions/{profession}/favorite/toggle', [FavoriteProfessionController::class, 'toggle'])->whereNumber('profession')->name('favorite.toggle');
+        Route::delete('saved-professions/{savedProfession}', [FavoriteProfessionController::class, 'destroyPivot'])->whereNumber('savedProfession')->name('saved-professions.destroy');
     });
 
     Route::prefix('career-action-plan')->name('action-plan.')->group(function () {

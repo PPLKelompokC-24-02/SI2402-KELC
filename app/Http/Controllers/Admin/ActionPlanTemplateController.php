@@ -8,6 +8,7 @@ use App\Http\Requests\AdminActionPlanTemplateRequest;
 use App\Http\Resources\ActionPlanTemplateResource;
 use App\Models\ActionPlanTemplate;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\Gate;
 
@@ -97,4 +98,3 @@ class ActionPlanTemplateController extends Controller
         ]);
     }
 }
-

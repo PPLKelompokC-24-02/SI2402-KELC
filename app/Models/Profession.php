@@ -30,4 +30,18 @@ class Profession extends Model
     {
         return $this->belongsToMany(Competency::class)->withTimestamps();
     }
+
+    public function savedByUsers(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'saved_professions')->withTimestamps();
+    }
+
+    public function isSavedBy(?User $user): bool
+    {
+        if (! $user) {
+            return false;
+        }
+
+        return $this->savedByUsers()->where('users.id', $user->id)->exists();
+    }
 }

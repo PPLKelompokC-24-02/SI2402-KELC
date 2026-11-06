@@ -4,8 +4,56 @@
 @section('content')
 <div class="career-page career-detail-page">
     <a class="career-back" href="{{ route('careers.professions.index', $filters) }}"><x-app.icon name="back" /> Kembali ke Daftar Profesi</a>
+
+    <div id="toast-container" class="toast-container" aria-live="polite">
+        @if (session('status'))
+            <div class="toast-message toast-message--success" role="status">
+                <span class="toast-icon"><x-app.icon name="check" /></span>
+                <span class="toast-text">{{ session('status') }}</span>
+                <button type="button" class="toast-close" onclick="this.parentElement.remove()" aria-label="Tutup notifikasi">&times;</button>
+            </div>
+        @endif
+        @if (session('info'))
+            <div class="toast-message toast-message--info" role="status">
+                <span class="toast-icon"><x-app.icon name="heart" /></span>
+                <span class="toast-text">{{ session('info') }}</span>
+                <button type="button" class="toast-close" onclick="this.parentElement.remove()" aria-label="Tutup notifikasi">&times;</button>
+            </div>
+        @endif
+        @if (session('error'))
+            <div class="toast-message toast-message--error" role="alert">
+                <span class="toast-icon"><x-app.icon name="close" /></span>
+                <span class="toast-text">{{ session('error') }}</span>
+                <button type="button" class="toast-close" onclick="this.parentElement.remove()" aria-label="Tutup notifikasi">&times;</button>
+            </div>
+        @endif
+    </div>
+
     <header class="profession-hero {{ $tab !== 'overview' ? 'profession-hero--compact' : '' }}">
-        <div class="profession-hero-copy"><p class="career-eyebrow">KENALI PROFESINYA</p><span class="category-badge">{{ $profession->careerCategory?->name ?? 'Kategori belum tersedia' }}</span><h1>{{ $profession->name }}</h1>@if ($tab === 'overview')<p>{{ $profession->summary ?: Str::limit($profession->description, 240) }}</p>@endif</div>
+        <div class="profession-hero-copy">
+            <div class="profession-hero-top">
+                <p class="career-eyebrow">KENALI PROFESINYA</p>
+                <form method="POST"
+                      action="{{ route('careers.favorite.toggle', $profession) }}"
+                      class="favorite-form"
+                      data-favorite-form
+                      data-profession-id="{{ $profession->id }}"
+                      data-profession-name="{{ $profession->name }}"
+                      data-is-detail="true">
+                    @csrf
+                    <button type="submit"
+                            class="favorite-hero-btn {{ $isSaved ? 'is-active' : '' }}"
+                            title="{{ $isSaved ? 'Hapus dari Favorit' : 'Simpan ke Favorit' }}"
+                            aria-label="{{ $isSaved ? 'Hapus dari Favorit' : 'Simpan ke Favorit' }}">
+                        <x-app.icon :name="$isSaved ? 'heart-filled' : 'heart'" class="heart-icon" />
+                        <span class="favorite-hero-label">{{ $isSaved ? 'Tersimpan di Favorit' : 'Simpan ke Favorit' }}</span>
+                    </button>
+                </form>
+            </div>
+            <span class="category-badge">{{ $profession->careerCategory?->name ?? 'Kategori belum tersedia' }}</span>
+            <h1>{{ $profession->name }}</h1>
+            @if ($tab === 'overview')<p>{{ $profession->summary ?: Str::limit($profession->description, 240) }}</p>@endif
+        </div>
         @if ($tab === 'overview')<x-careers.art :profession="$profession" />@endif
     </header>
     @if ($tab === 'overview')

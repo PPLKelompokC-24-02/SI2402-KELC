@@ -315,4 +315,3 @@ class AdminCareerEventWebTest extends ApiTestCase
             ->assertNotFound();
     }
 }
-

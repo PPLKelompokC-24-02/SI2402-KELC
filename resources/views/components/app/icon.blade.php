@@ -28,5 +28,8 @@
         @case('menu') <path d="M4 6h16M4 12h16M4 18h10" /> @break
         @case('close') <path d="m6 6 12 12M6 18 18 6" /> @break
         @case('chevron') <path d="m8 10 4 4 4-4" /> @break
+        @case('heart') <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" /> @break
+        @case('heart-filled') <path fill="currentColor" stroke="currentColor" d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" /> @break
+        @case('trash') <path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" /> @break
     @endswitch
 </svg>

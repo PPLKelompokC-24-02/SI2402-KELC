@@ -126,4 +126,3 @@ class ActionPlanTemplateController extends Controller
         return view($view, [...AppLayout::data($request->user('web')), ...$data]);
     }
 }
-
