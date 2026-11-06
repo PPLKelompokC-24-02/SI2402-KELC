@@ -28,4 +28,3 @@ class ActionPlanPolicy
         return $user->id === $actionPlan->user_id;
     }
 }
-

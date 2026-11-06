@@ -69,4 +69,3 @@ class AdminActionPlanTemplateRequest extends FormRequest
         ];
     }
 }
-

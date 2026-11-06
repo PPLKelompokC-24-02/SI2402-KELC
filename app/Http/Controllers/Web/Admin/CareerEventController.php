@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\ViewErrorBag;
 use Illuminate\View\View;
 use RuntimeException;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -253,7 +254,7 @@ class CareerEventController extends Controller
      */
     private function page(Request $request, string $view, array $data): View
     {
-        $errors = session('errors') ?? (view()->shared('errors') ?? new \Illuminate\Support\ViewErrorBag());
+        $errors = session('errors') ?? (view()->shared('errors') ?? new ViewErrorBag);
 
         return view($view, [
             'errors' => $errors,
@@ -262,4 +263,3 @@ class CareerEventController extends Controller
         ]);
     }
 }
-

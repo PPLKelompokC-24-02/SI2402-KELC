@@ -100,4 +100,3 @@ class ActionPlanTemplateApiTest extends ApiTestCase
         $this->deleteJson($base.'/'.$template->id)->assertForbidden();
     }
 }
-

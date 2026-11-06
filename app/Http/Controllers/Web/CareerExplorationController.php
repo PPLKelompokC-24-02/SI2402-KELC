@@ -20,27 +20,52 @@ class CareerExplorationController extends Controller
     public function index(ExploreProfessionsRequest $request): View
     {
         Gate::authorize('viewAny', Profession::class);
+        $user = $request->user('web');
+        $savedProfessionIds = $user ? $user->savedProfessions()->pluck('professions.id')->all() : [];
 
         // A neutral selection of published professions, independent of assessment.
         return $this->page($request, 'careers.index', [
             'categories' => CareerCategory::orderBy('name')->get(),
             'professions' => $this->visible()->with('careerCategory')->orderBy('name')->limit(3)->get(),
+            'savedProfessionIds' => $savedProfessionIds,
         ]);
     }
 
     public function professions(ExploreProfessionsRequest $request): View
     {
         Gate::authorize('viewAny', Profession::class);
-        $filters = $request->safe()->only(['keyword', 'category', 'page', 'per_page']);
-        $professions = $this->visible()->with('careerCategory')
-            ->when($request->filled('keyword'), fn (Builder $query) => $query->whereLike('name', '%'.$request->validated('keyword').'%'))
-            ->when($request->filled('category'), fn (Builder $query) => $query->where('career_category_id', $request->validated('category')))
-            ->orderBy('name')->orderBy('id')->paginate($request->integer('per_page', 10))->withQueryString();
+        $user = $request->user('web');
+        $tab = $request->input('tab') === 'favorites' ? 'favorites' : 'all';
+        $filters = $request->safe()->only(['keyword', 'category', 'page', 'per_page', 'tab']);
+
+        if ($tab === 'favorites') {
+            $professionsQuery = $user ? $user->savedProfessions() : Profession::query()->whereRaw('1 = 0');
+            $professions = $professionsQuery
+                ->where('professions.is_active', true)
+                ->where('professions.publication_status', 'published')
+                ->with('careerCategory')
+                ->when($request->filled('keyword'), fn (Builder $query) => $query->whereLike('professions.name', '%'.$request->validated('keyword').'%'))
+                ->when($request->filled('category'), fn (Builder $query) => $query->where('professions.career_category_id', $request->validated('category')))
+                ->orderBy('saved_professions.created_at', 'desc')
+                ->paginate($request->integer('per_page', 10))
+                ->withQueryString();
+        } else {
+            $professions = $this->visible()->with('careerCategory')
+                ->when($request->filled('keyword'), fn (Builder $query) => $query->whereLike('name', '%'.$request->validated('keyword').'%'))
+                ->when($request->filled('category'), fn (Builder $query) => $query->where('career_category_id', $request->validated('category')))
+                ->orderBy('name')->orderBy('id')->paginate($request->integer('per_page', 10))->withQueryString();
+        }
+
+        $savedProfessionIds = $user ? $user->savedProfessions()->pluck('professions.id')->all() : [];
+        $savedCount = $user ? $user->savedProfessions()->where('professions.is_active', true)->where('professions.publication_status', 'published')->count() : 0;
 
         return $this->page($request, 'careers.professions', [
             'professions' => $professions,
             'categories' => CareerCategory::orderBy('name')->get(),
             'filters' => $filters,
+            'tab' => $tab,
+            'savedProfessionIds' => $savedProfessionIds,
+            'savedCount' => $savedCount,
         ]);
     }
 
@@ -48,11 +73,13 @@ class CareerExplorationController extends Controller
     {
         $profession = $this->visible()->with(['careerCategory', 'competencies'])->findOrFail($profession);
         Gate::authorize('view', $profession);
+        $user = $request->user('web');
 
         return $this->page($request, 'careers.show', [
             'profession' => $profession,
             'tab' => $request->validated('tab') ?? 'overview',
             'filters' => $request->safe()->only(['keyword', 'category', 'page', 'per_page']),
+            'isSaved' => $user ? $user->hasSavedProfession($profession) : false,
             'tabs' => [
                 'overview' => 'Overview', 'responsibilities' => 'Tanggung Jawab',
                 'competencies' => 'Kompetensi', 'path' => 'Jalur Karier',

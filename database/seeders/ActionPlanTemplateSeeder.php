@@ -48,4 +48,3 @@ class ActionPlanTemplateSeeder extends Seeder
         }
     }
 }
-

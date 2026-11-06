@@ -72,7 +72,7 @@ class HomeTest extends ApiTestCase
         $sections = Navigation::forRole($role);
         foreach ($sections as $section) {
             foreach ($section['items'] as $item) {
-                if (in_array($item['route'], ['home', 'logout', 'admin.professions.index', 'careers.index', 'admin.action-templates.index', 'action-plan.index'], true)) {
+                if (in_array($item['route'], ['home', 'logout', 'admin.professions.index', 'careers.index', 'admin.action-templates.index', 'action-plan.index', 'admin.events.index'], true)) {
                     $this->assertNotNull($item['url']);
                 } else {
                     $this->assertNull($item['url']);

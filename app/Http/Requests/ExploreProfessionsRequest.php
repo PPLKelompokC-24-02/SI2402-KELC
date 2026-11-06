@@ -17,7 +17,7 @@ class ExploreProfessionsRequest extends CatalogRequest
         return [
             ...parent::rules(),
             'category' => ['nullable', 'integer', 'exists:career_categories,id'],
-            'tab' => ['nullable', Rule::in(['overview', 'responsibilities', 'competencies', 'path', 'courses', 'tools'])],
+            'tab' => ['nullable', Rule::in(['overview', 'responsibilities', 'competencies', 'path', 'courses', 'tools', 'all', 'favorites'])],
         ];
     }
 

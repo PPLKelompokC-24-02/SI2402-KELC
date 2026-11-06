@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\ProfessionController as AdminProfessionController
 use App\Http\Controllers\Admin\UserRoleController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfessionController;
+use App\Http\Controllers\Web\FavoriteProfessionController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('auth')->group(function () {
@@ -26,6 +27,10 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('professions/{profession}', [ProfessionController::class, 'show'])->whereNumber('profession');
         Route::get('action-templates', [ActionPlanTemplateController::class, 'index']);
         Route::get('action-templates/{action_template}', [ActionPlanTemplateController::class, 'show'])->whereNumber('action_template');
+        Route::post('professions/{profession}/favorite', [FavoriteProfessionController::class, 'store'])->whereNumber('profession');
+        Route::delete('professions/{profession}/favorite', [FavoriteProfessionController::class, 'destroy'])->whereNumber('profession');
+        Route::post('professions/{profession}/favorite/toggle', [FavoriteProfessionController::class, 'toggle'])->whereNumber('profession');
+        Route::delete('saved-professions/{savedProfession}', [FavoriteProfessionController::class, 'destroyPivot'])->whereNumber('savedProfession');
     });
 
     Route::prefix('admin')->middleware('role:admin')->group(function () {

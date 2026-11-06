@@ -20,4 +20,3 @@ class AdminActionPlanTemplateIndexRequest extends CatalogRequest
         ];
     }
 }
-

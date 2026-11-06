@@ -36,7 +36,7 @@ class CareerEventSeeder extends Seeder
             [
                 'title' => 'Webinar: Navigating Your Career Path in Data & AI',
                 'category' => 'Webinar',
-                'description' => "Bahas tuntas tren karier di bidang Data Analytics, Data Science, dan Artificial Intelligence. Ketahui keterampilan apa saja yang paling dicari industri saat ini dan bagaimana menyusun portofolio data yang memikat recruiter.",
+                'description' => 'Bahas tuntas tren karier di bidang Data Analytics, Data Science, dan Artificial Intelligence. Ketahui keterampilan apa saja yang paling dicari industri saat ini dan bagaimana menyusun portofolio data yang memikat recruiter.',
                 'organizer' => 'Google Developer Student Clubs (GDSC) Telkom University',
                 'start_at' => Carbon::parse('2026-11-15 10:00:00'),
                 'end_at' => Carbon::parse('2026-11-15 12:00:00'),
@@ -47,7 +47,7 @@ class CareerEventSeeder extends Seeder
             [
                 'title' => 'Seminar Nasional: Masa Depan Karier Lulusan Sistem Informasi',
                 'category' => 'Seminar',
-                'description' => "Seminar tatap muka interaktif bersama para praktisi industri IT dan alumni sukses membahas lanskap pekerjaan masa depan serta kesiapan kompetensi lulusan program studi Sistem Informasi.",
+                'description' => 'Seminar tatap muka interaktif bersama para praktisi industri IT dan alumni sukses membahas lanskap pekerjaan masa depan serta kesiapan kompetensi lulusan program studi Sistem Informasi.',
                 'organizer' => 'Fakultas Rekayasa Industri & CDC Telkom University',
                 'start_at' => Carbon::parse('2026-11-25 08:30:00'),
                 'end_at' => Carbon::parse('2026-11-25 12:00:00'),
@@ -74,4 +74,3 @@ class CareerEventSeeder extends Seeder
         }
     }
 }
-

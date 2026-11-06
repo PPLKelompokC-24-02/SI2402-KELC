@@ -33,4 +33,3 @@ class CareerEventPolicy
         return $user->hasRole(Role::ADMIN);
     }
 }
-

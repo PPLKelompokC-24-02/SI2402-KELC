@@ -30,4 +30,3 @@ class ActionPlan extends Model
         return $this->belongsTo(ActionPlanTemplate::class, 'template_id');
     }
 }
-

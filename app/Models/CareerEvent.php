@@ -93,8 +93,8 @@ class CareerEvent extends Model
 
         return $query->where(function ($q) use ($keyword) {
             $q->where('title', 'like', '%'.$keyword.'%')
-              ->orWhere('organizer', 'like', '%'.$keyword.'%')
-              ->orWhere('location', 'like', '%'.$keyword.'%');
+                ->orWhere('organizer', 'like', '%'.$keyword.'%')
+                ->orWhere('location', 'like', '%'.$keyword.'%');
         });
     }
 
@@ -122,4 +122,3 @@ class CareerEvent extends Model
         return $query->where('status', $status);
     }
 }
-
