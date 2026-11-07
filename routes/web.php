@@ -6,6 +6,7 @@ use App\Http\Controllers\Web\Admin\ProfessionController;
 use App\Http\Controllers\Web\AuthenticationController;
 use App\Http\Controllers\Web\CareerActionPlanController;
 use App\Http\Controllers\Web\CareerExplorationController;
+use App\Http\Controllers\Web\CvBuilderController;
 use App\Http\Controllers\Web\FavoriteProfessionController;
 use App\Http\Controllers\Web\HomeController;
 use Illuminate\Support\Facades\Route;
@@ -41,6 +42,13 @@ Route::middleware(['auth:web', 'role:mahasiswa'])->group(function () {
         Route::get('/', [CareerActionPlanController::class, 'index'])->name('index');
         Route::post('from-template/{action_template}', [CareerActionPlanController::class, 'storeFromTemplate'])->name('from-template')->whereNumber('action_template');
         Route::delete('{action_plan}', [CareerActionPlanController::class, 'destroy'])->name('destroy')->whereNumber('action_plan');
+    });
+
+    Route::prefix('cv-builder')->name('cv.')->group(function () {
+        Route::get('/', [CvBuilderController::class, 'index'])->name('index');
+        Route::get('edit', [CvBuilderController::class, 'edit'])->name('edit');
+        Route::put('/', [CvBuilderController::class, 'update'])->name('update');
+        Route::get('preview', [CvBuilderController::class, 'preview'])->name('preview');
     });
 });
 
