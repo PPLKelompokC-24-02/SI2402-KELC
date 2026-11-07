@@ -13,4 +13,9 @@ class Competency extends Model
     {
         return $this->belongsToMany(Profession::class)->withTimestamps();
     }
+
+    public function careerPathStages(): BelongsToMany
+    {
+        return $this->belongsToMany(CareerPathStage::class, 'career_path_stage_competency')->withTimestamps();
+    }
 }

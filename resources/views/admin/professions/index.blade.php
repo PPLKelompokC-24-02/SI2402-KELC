@@ -27,7 +27,7 @@
                     <td>{{ $profession->careerCategory?->name ?? 'Belum dipilih' }}</td>
                     <td><x-professions.status :profession="$profession" /></td>
                     <td class="date-cell">{{ $profession->updated_at->format('d M Y') }}</td>
-                    <td><div class="row-actions"><a class="text-link" href="{{ route('admin.professions.show', $profession) }}">Detail<span class="sr-only"> {{ $profession->name }}</span></a><a class="text-link" href="{{ route('admin.professions.edit', $profession) }}">Edit<span class="sr-only"> {{ $profession->name }}</span></a>
+                    <td><div class="row-actions"><a class="text-link" href="{{ route('admin.professions.show', $profession) }}">Detail<span class="sr-only"> {{ $profession->name }}</span></a><a class="text-link" href="{{ route('admin.professions.edit', $profession) }}">Edit<span class="sr-only"> {{ $profession->name }}</span></a><a class="text-link" href="{{ route('admin.professions.career-paths.index', $profession) }}">Career Path<span class="sr-only"> {{ $profession->name }}</span></a>
                     @if ($profession->is_active)<form method="POST" action="{{ route('admin.professions.destroy', $profession) }}" data-deactivate-form data-profession-name="{{ $profession->name }}">@csrf @method('DELETE')<button class="text-link text-link--muted" type="submit">Nonaktifkan<span class="sr-only"> {{ $profession->name }}</span></button></form>@endif
                     </div></td>
                 </tr>@endforeach</tbody></table>

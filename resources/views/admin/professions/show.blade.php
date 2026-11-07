@@ -4,7 +4,7 @@
 @section('content')
 <div class="profession-page profession-detail">
     <a class="back-link" href="{{ route('admin.professions.index') }}"><x-app.icon name="back" /> Kembali ke Manajemen Profesi</a>
-    <div class="profession-heading"><div><h1>{{ $profession->name }}</h1><p>{{ $profession->careerCategory?->name ?? 'Kategori belum dipilih' }}</p></div><div class="detail-heading-actions"><x-professions.status :profession="$profession" /><a class="button button--primary" href="{{ route('admin.professions.edit', $profession) }}">Edit Profesi</a></div></div>
+    <div class="profession-heading"><div><h1>{{ $profession->name }}</h1><p>{{ $profession->careerCategory?->name ?? 'Kategori belum dipilih' }}</p></div><div class="detail-heading-actions"><x-professions.status :profession="$profession" /><a class="button button--outline" href="{{ route('admin.professions.career-paths.index', $profession) }}"><x-app.icon name="compass" /> Kelola Career Path</a><a class="button button--primary" href="{{ route('admin.professions.edit', $profession) }}">Edit Profesi</a></div></div>
     <section class="editor-section detail-overview" aria-labelledby="overview-title">
         @if ($profession->illustration_path)<img class="detail-illustration" src="{{ route('admin.professions.illustration', $profession) }}" alt="Ilustrasi {{ $profession->name }}">@endif
         <div><h2 id="overview-title">Tentang profesi</h2><p class="detail-summary">{{ $profession->summary ?: 'Deskripsi singkat belum diisi.' }}</p><p class="detail-description">{{ $profession->description ?: 'Deskripsi lengkap belum diisi.' }}</p></div>
