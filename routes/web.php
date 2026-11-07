@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Web\Admin\ActionPlanTemplateController as AdminActionPlanTemplateController;
 use App\Http\Controllers\Web\Admin\CareerEventController;
+use App\Http\Controllers\Web\Admin\CareerPathController;
 use App\Http\Controllers\Web\Admin\ProfessionController;
 use App\Http\Controllers\Web\AuthenticationController;
 use App\Http\Controllers\Web\CareerActionPlanController;
@@ -61,4 +62,11 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:web', 'role:admin'])->
 
     Route::get('events/{event}/poster', [CareerEventController::class, 'poster'])->whereNumber('event')->name('events.poster');
     Route::resource('events', CareerEventController::class)->whereNumber('event');
+
+    Route::get('professions/{profession}/career-paths', [CareerPathController::class, 'stages'])->whereNumber('profession')->name('professions.career-paths.index');
+    Route::post('professions/{profession}/career-paths', [CareerPathController::class, 'store'])->whereNumber('profession')->name('professions.career-paths.store');
+    Route::put('professions/{profession}/career-paths/reorder', [CareerPathController::class, 'reorder'])->whereNumber('profession')->name('professions.career-paths.reorder');
+    Route::get('professions/{profession}/career-paths/{stage}', [CareerPathController::class, 'show'])->whereNumber('profession')->whereNumber('stage')->name('professions.career-paths.show');
+    Route::put('professions/{profession}/career-paths/{stage}', [CareerPathController::class, 'update'])->whereNumber('profession')->whereNumber('stage')->name('professions.career-paths.update');
+    Route::delete('professions/{profession}/career-paths/{stage}', [CareerPathController::class, 'destroy'])->whereNumber('profession')->whereNumber('stage')->name('professions.career-paths.destroy');
 });

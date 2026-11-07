@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Profession extends Model
 {
@@ -43,5 +44,10 @@ class Profession extends Model
         }
 
         return $this->savedByUsers()->where('users.id', $user->id)->exists();
+    }
+
+    public function careerPathStages(): HasMany
+    {
+        return $this->hasMany(CareerPathStage::class)->orderBy('sort_order');
     }
 }
