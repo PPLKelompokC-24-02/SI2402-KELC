@@ -19,7 +19,7 @@
     </section>
     <section aria-labelledby="featured-title" class="featured-section">
         <div class="career-section-heading career-section-heading--inline"><div><h2 id="featured-title">Pilihan profesi untuk dijelajahi</h2><p>Kenali peran, tanggung jawab, dan kompetensi yang dibutuhkan.</p></div><a class="career-text-link" href="{{ route('careers.professions.index') }}">Lihat semua <x-arrow /></a></div>
-        @if ($professions->isNotEmpty())<div class="career-card-grid">@foreach ($professions as $profession)<x-careers.card :profession="$profession" :tone="$loop->index" />@endforeach</div>
+        @if ($professions->isNotEmpty())<div class="career-card-grid">@foreach ($professions as $profession)<x-careers.card :profession="$profession" :tone="$loop->index" :is-saved="in_array($profession->id, $savedProfessionIds, true)" />@endforeach</div>
         @else<x-careers.empty title="Belum ada profesi tersedia" description="Informasi profesi akan tampil setelah diterbitkan." icon="briefcase" />@endif
     </section>
 </div>

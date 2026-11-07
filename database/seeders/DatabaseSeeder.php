@@ -13,7 +13,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         DB::transaction(function () {
-            $this->call([RoleSeeder::class, CareerCatalogSeeder::class]);
+            $this->call([RoleSeeder::class, CareerCatalogSeeder::class, CareerEventSeeder::class, ActionPlanTemplateSeeder::class]);
             if (app()->environment(['local', 'testing'])) {
                 $this->call(DemoUserSeeder::class);
             }

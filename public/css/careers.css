@@ -239,7 +239,61 @@
     .path-connector { transform: rotate(90deg); }
     .path-step { padding: 25px; }
     .career-empty { padding: 40px 22px; }
+    .result-actions { width: 100%; justify-content: space-between; margin-top: 10px; }
+    .favorite-hero-btn .favorite-hero-label { display: none; }
 }
+
+/* Tabs: Daftar Profesi vs Favorit Saya */
+.career-tabs { display: flex; gap: 8px; margin: 18px 0 24px; border-bottom: 2px solid #e2ebf0; padding-bottom: 0; }
+.career-tab { display: inline-flex; align-items: center; gap: 8px; padding: 11px 18px; border-bottom: 3px solid transparent; margin-bottom: -2px; font-size: 13px; font-weight: 500; color: #627685; text-decoration: none; transition: color 150ms, border-color 150ms; }
+.career-tab:hover { color: var(--navy); }
+.career-tab.is-active { color: var(--navy); border-bottom-color: var(--navy); font-weight: 600; }
+.tab-heart-icon { display: inline-flex; color: #e04f5f; }
+.tab-heart-icon svg { width: 15px; height: 15px; }
+.tab-badge { display: inline-flex; align-items: center; justify-content: center; min-width: 20px; height: 20px; padding: 0 6px; border-radius: 10px; background: #f0f4f8; color: var(--navy); font-size: 11px; font-weight: 600; }
+.career-tab.is-active .tab-badge { background: var(--navy); color: white; }
+
+/* Favorite Buttons & Actions */
+.result-actions { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+.favorite-form { display: inline-flex; margin: 0; }
+.favorite-action-btn { display: inline-grid; place-items: center; width: 38px; height: 38px; border-radius: 8px; border: 1px solid #dce5eb; background: white; color: #8c9ea8; cursor: pointer; transition: all 160ms ease-in-out; padding: 0; }
+.favorite-action-btn:hover { background: #fff5f5; border-color: #f7b4bc; color: #e04f5f; transform: scale(1.05); }
+.favorite-action-btn.is-active { background: #fff0f1; border-color: #f38f9b; color: #e04f5f; }
+.favorite-action-btn .heart-icon { width: 19px; height: 19px; transition: transform 160ms; }
+.favorite-action-btn:hover .heart-icon, .favorite-action-btn.is-active .heart-icon { transform: scale(1.08); }
+
+.career-card-top { position: relative; }
+.favorite-card-form { position: absolute; top: 10px; right: 10px; z-index: 2; }
+.favorite-card-btn { background: rgba(255, 255, 255, 0.94); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); backdrop-filter: blur(4px); }
+
+.favorite-remove-btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 12px; border: 1px solid #fed7d7; border-radius: 6px; background: #fff5f5; color: #c53030; font-size: 11px; font-weight: 500; cursor: pointer; transition: background 150ms, border-color 150ms; }
+.favorite-remove-btn svg { width: 14px; height: 14px; }
+.favorite-remove-btn:hover { background: #fed7d7; border-color: #feb2b2; }
+
+.profession-hero-top { display: flex; align-items: center; justify-content: space-between; gap: 14px; }
+.favorite-hero-btn { display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; border-radius: 20px; border: 1px solid #dce5eb; background: white; color: #556c7a; font-size: 12px; font-weight: 500; cursor: pointer; transition: all 160ms ease-in-out; }
+.favorite-hero-btn svg { width: 16px; height: 16px; color: #8c9ea8; }
+.favorite-hero-btn:hover { border-color: #f7b4bc; background: #fff5f5; color: #e04f5f; }
+.favorite-hero-btn:hover svg { color: #e04f5f; }
+.favorite-hero-btn.is-active { background: #fff0f1; border-color: #f38f9b; color: #c53030; font-weight: 600; }
+.favorite-hero-btn.is-active svg { color: #e04f5f; }
+
+/* Toast Notifications */
+.toast-container { position: fixed; top: 24px; right: 24px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; max-width: 420px; width: calc(100% - 48px); pointer-events: none; }
+.toast-message { pointer-events: auto; display: flex; align-items: center; gap: 12px; padding: 13px 18px; border-radius: 8px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12); font-size: 13px; line-height: 1.5; background: white; border-left: 4px solid var(--navy); animation: toastSlideIn 240ms cubic-bezier(0.16, 1, 0.3, 1); transition: opacity 200ms ease, transform 200ms ease; }
+.toast-message--success { border-left-color: #27865c; color: #174230; }
+.toast-message--success .toast-icon { color: #27865c; }
+.toast-message--info { border-left-color: #073763; color: #073763; }
+.toast-message--info .toast-icon { color: #e04f5f; }
+.toast-message--error { border-left-color: #c53030; color: #742a2a; }
+.toast-message--error .toast-icon { color: #c53030; }
+.toast-icon { display: inline-grid; place-items: center; flex-shrink: 0; }
+.toast-icon svg { width: 20px; height: 20px; }
+.toast-text { flex: 1; font-weight: 500; }
+.toast-close { background: transparent; border: 0; font-size: 20px; line-height: 1; color: #9aa8b2; cursor: pointer; padding: 0 4px; }
+.toast-close:hover { color: #333; }
+@keyframes toastSlideIn { from { opacity: 0; transform: translateY(-12px); } to { opacity: 1; transform: translateY(0); } }
+
 @media (prefers-reduced-motion: reduce) {
     .career-card, .career-button, .category-card, .category-chip { transition: none; }
 }

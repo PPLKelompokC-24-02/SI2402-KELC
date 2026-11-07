@@ -1,10 +1,13 @@
 <?php
 
+use App\Http\Controllers\ActionPlanTemplateController;
+use App\Http\Controllers\Admin\ActionPlanTemplateController as AdminActionPlanTemplateController;
 use App\Http\Controllers\Admin\MasterDataController;
 use App\Http\Controllers\Admin\ProfessionController as AdminProfessionController;
 use App\Http\Controllers\Admin\UserRoleController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfessionController;
+use App\Http\Controllers\Web\FavoriteProfessionController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('auth')->group(function () {
@@ -22,10 +25,17 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::middleware('role:mahasiswa')->group(function () {
         Route::get('professions', [ProfessionController::class, 'index']);
         Route::get('professions/{profession}', [ProfessionController::class, 'show'])->whereNumber('profession');
+        Route::get('action-templates', [ActionPlanTemplateController::class, 'index']);
+        Route::get('action-templates/{action_template}', [ActionPlanTemplateController::class, 'show'])->whereNumber('action_template');
+        Route::post('professions/{profession}/favorite', [FavoriteProfessionController::class, 'store'])->whereNumber('profession');
+        Route::delete('professions/{profession}/favorite', [FavoriteProfessionController::class, 'destroy'])->whereNumber('profession');
+        Route::post('professions/{profession}/favorite/toggle', [FavoriteProfessionController::class, 'toggle'])->whereNumber('profession');
+        Route::delete('saved-professions/{savedProfession}', [FavoriteProfessionController::class, 'destroyPivot'])->whereNumber('savedProfession');
     });
 
     Route::prefix('admin')->middleware('role:admin')->group(function () {
         Route::apiResource('professions', AdminProfessionController::class)->whereNumber('profession');
+        Route::apiResource('action-templates', AdminActionPlanTemplateController::class)->parameters(['action-templates' => 'action_template'])->whereNumber('action_template');
         Route::get('career-categories', [MasterDataController::class, 'categories']);
         Route::get('competencies', [MasterDataController::class, 'competencies']);
         Route::get('roles', [MasterDataController::class, 'roles']);
