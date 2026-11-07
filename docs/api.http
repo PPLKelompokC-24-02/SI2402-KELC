@@ -1,0 +1,165 @@
+@baseUrl = http://127.0.0.1:8000
+@demoPassword = CareerCompass123!
+@professionId = 1
+@userId = 3
+
+### Registrasi selalu mahasiswa; gunakan email dan NIM baru saat mengulang
+POST {{baseUrl}}/api/auth/register
+Accept: application/json
+Content-Type: application/json
+
+{
+  "name": "Mahasiswa Baru",
+  "email": "mahasiswa.baru@example.com",
+  "password": "SecurePassword123!",
+  "password_confirmation": "SecurePassword123!",
+  "nim": "1202230099"
+}
+
+### Login mahasiswa (jalankan sebelum request mahasiswa berikutnya)
+# @name studentLogin
+POST {{baseUrl}}/api/auth/login
+Accept: application/json
+Content-Type: application/json
+
+{"email": "mahasiswa@careercompass.test", "password": "{{demoPassword}}"}
+
+### Profil sendiri
+GET {{baseUrl}}/api/auth/me
+Accept: application/json
+Authorization: Bearer {{studentLogin.response.body.$.data.token}}
+
+### Ubah profil
+PUT {{baseUrl}}/api/auth/profile
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer {{studentLogin.response.body.$.data.token}}
+
+{"name": "Mahasiswa Demo", "bio": "Tertarik pada analisis data."}
+
+### Katalog aktif tanpa assessment
+GET {{baseUrl}}/api/professions?keyword=analyst&per_page=2&page=1
+Accept: application/json
+Authorization: Bearer {{studentLogin.response.body.$.data.token}}
+
+### Hasil kosong tetap 200
+GET {{baseUrl}}/api/professions?keyword=tidak-ada
+Accept: application/json
+Authorization: Bearer {{studentLogin.response.body.$.data.token}}
+
+### Detail aktif
+GET {{baseUrl}}/api/professions/{{professionId}}
+Accept: application/json
+Authorization: Bearer {{studentLogin.response.body.$.data.token}}
+
+### Mahasiswa mengakses admin -> 403
+DELETE {{baseUrl}}/api/admin/professions/{{professionId}}
+Accept: application/json
+Authorization: Bearer {{studentLogin.response.body.$.data.token}}
+
+### Login admin
+# @name adminLogin
+POST {{baseUrl}}/api/auth/login
+Accept: application/json
+Content-Type: application/json
+
+{"email": "admin@careercompass.test", "password": "{{demoPassword}}"}
+
+### Semua profesi, termasuk nonaktif
+GET {{baseUrl}}/api/admin/professions?per_page=15&page=1
+Accept: application/json
+Authorization: Bearer {{adminLogin.response.body.$.data.token}}
+
+### Detail admin
+GET {{baseUrl}}/api/admin/professions/{{professionId}}
+Accept: application/json
+Authorization: Bearer {{adminLogin.response.body.$.data.token}}
+
+### Master kategori (sesuaikan ID pada body profesi)
+GET {{baseUrl}}/api/admin/career-categories
+Accept: application/json
+Authorization: Bearer {{adminLogin.response.body.$.data.token}}
+
+### Master kompetensi (sesuaikan ID pada body profesi)
+GET {{baseUrl}}/api/admin/competencies
+Accept: application/json
+Authorization: Bearer {{adminLogin.response.body.$.data.token}}
+
+### Tambah profesi
+# @name createProfession
+POST {{baseUrl}}/api/admin/professions
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer {{adminLogin.response.body.$.data.token}}
+
+{
+  "name": "Quality Assurance Engineer",
+  "description": "Memastikan kualitas aplikasi melalui pengujian.",
+  "responsibilities": ["Menyusun test plan.", "Melakukan pengujian regresi."],
+  "career_category_id": 1,
+  "competency_ids": [1, 4],
+  "is_active": true
+}
+
+### Pembaruan lengkap profesi yang baru dibuat
+PUT {{baseUrl}}/api/admin/professions/{{createProfession.response.body.$.data.id}}
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer {{adminLogin.response.body.$.data.token}}
+
+{
+  "name": "QA Engineer",
+  "description": "Memastikan kualitas dan keandalan aplikasi.",
+  "responsibilities": ["Menyusun test plan.", "Mengotomasi pengujian regresi."],
+  "career_category_id": 1,
+  "competency_ids": [1, 4]
+}
+
+### Nonaktifkan profesi baru; relasi tetap tersimpan
+DELETE {{baseUrl}}/api/admin/professions/{{createProfession.response.body.$.data.id}}
+Accept: application/json
+Authorization: Bearer {{adminLogin.response.body.$.data.token}}
+
+### Aktifkan kembali
+PATCH {{baseUrl}}/api/admin/professions/{{createProfession.response.body.$.data.id}}
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer {{adminLogin.response.body.$.data.token}}
+
+{"is_active": true}
+
+### Daftar user (gunakan ID yang dikembalikan untuk mengubah role)
+GET {{baseUrl}}/api/admin/users
+Accept: application/json
+Authorization: Bearer {{adminLogin.response.body.$.data.token}}
+
+### Daftar role
+GET {{baseUrl}}/api/admin/roles
+Accept: application/json
+Authorization: Bearer {{adminLogin.response.body.$.data.token}}
+
+### Ubah role pengguna lain; pengguna harus login ulang
+PUT {{baseUrl}}/api/admin/users/{{userId}}/role
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer {{adminLogin.response.body.$.data.token}}
+
+{"role": "mahasiswa"}
+
+### Login assessor
+# @name assessorLogin
+POST {{baseUrl}}/api/auth/login
+Accept: application/json
+Content-Type: application/json
+
+{"email": "assessor@careercompass.test", "password": "{{demoPassword}}"}
+
+### Area assessor, tanpa penilaian
+GET {{baseUrl}}/api/assessor/me
+Accept: application/json
+Authorization: Bearer {{assessorLogin.response.body.$.data.token}}
+
+### Logout mahasiswa, token request dicabut
+POST {{baseUrl}}/api/auth/logout
+Accept: application/json
+Authorization: Bearer {{studentLogin.response.body.$.data.token}}
