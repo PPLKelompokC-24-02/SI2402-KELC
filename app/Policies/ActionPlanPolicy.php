@@ -8,6 +8,11 @@ use App\Models\User;
 
 class ActionPlanPolicy
 {
+    public function viewAny(User $user): bool
+    {
+        return $user->hasRole(Role::MAHASISWA);
+    }
+
     public function view(User $user, ActionPlan $actionPlan): bool
     {
         return $user->id === $actionPlan->user_id;

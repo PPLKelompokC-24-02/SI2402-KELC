@@ -40,7 +40,11 @@ Route::middleware(['auth:web', 'role:mahasiswa'])->group(function () {
 
     Route::prefix('career-action-plan')->name('action-plan.')->group(function () {
         Route::get('/', [CareerActionPlanController::class, 'index'])->name('index');
+        Route::post('/', [CareerActionPlanController::class, 'store'])->name('store');
         Route::post('from-template/{action_template}', [CareerActionPlanController::class, 'storeFromTemplate'])->name('from-template')->whereNumber('action_template');
+        Route::get('{action_plan}/edit', [CareerActionPlanController::class, 'edit'])->name('edit')->whereNumber('action_plan');
+        Route::put('{action_plan}', [CareerActionPlanController::class, 'update'])->name('update')->whereNumber('action_plan');
+        Route::patch('{action_plan}/status', [CareerActionPlanController::class, 'updateStatus'])->name('status.update')->whereNumber('action_plan');
         Route::delete('{action_plan}', [CareerActionPlanController::class, 'destroy'])->name('destroy')->whereNumber('action_plan');
     });
 

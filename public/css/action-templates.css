@@ -104,7 +104,57 @@ textarea.form-control { resize: vertical; min-height: 120px; }
 .action-plan-table { width: 100%; border-collapse: collapse; font-size: 12px; }
 .action-plan-table th { padding: 12px 16px; background: #fafbf9; border-bottom: 1px solid var(--border); color: var(--navy); font-size: 11px; font-weight: 600; text-transform: uppercase; }
 .action-plan-table td { padding: 14px 16px; border-bottom: 1px solid #edf0ec; vertical-align: top; }
-.status-pill { display: inline-block; padding: 4px 10px; border-radius: 12px; font-size: 10px; font-weight: 600; background: #eaf1ed; color: #2d5a45; }
+.status-pill { display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px; border-radius: 12px; font-size: 10px; font-weight: 600; background: #eaf1ed; color: #2d5a45; white-space: nowrap; }
+.status-pill::before { content: ""; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+.status-pill--not-started { background: #f0f2f1; color: #5f6f67; border: 1px solid #d8dfdb; }
+.status-pill--in-progress { background: #fef7e7; color: #9a6b16; border: 1px solid #f6e2b5; }
+.status-pill--completed { background: #eaf6ee; color: #246d46; border: 1px solid #c9e7d3; }
+
+/* Statistics & Progress Cards */
+.stats-summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 24px; }
+.stat-card { background: white; border: 1px solid var(--border); border-radius: 9px; padding: 18px 20px; box-shadow: 0 2px 6px rgb(32 57 45 / 2%); display: flex; flex-direction: column; justify-content: space-between; }
+.stat-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.stat-label { font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; }
+.stat-icon { width: 22px; height: 22px; color: var(--muted); }
+.stat-value { font-size: 26px; font-weight: 700; color: var(--green); line-height: 1.2; }
+.stat-footer { margin-top: 6px; font-size: 11px; color: var(--muted); }
+
+.overall-progress-card { background: white; border: 1px solid var(--border); border-radius: 9px; padding: 20px 24px; margin-bottom: 28px; box-shadow: 0 2px 6px rgb(32 57 45 / 2%); }
+.progress-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 8px; }
+.progress-meta h3 { margin: 0; font-size: 14px; font-weight: 600; color: var(--navy); }
+.progress-percentage { font-size: 15px; font-weight: 700; color: var(--green); }
+.progress-track { width: 100%; height: 10px; background: #eaf0ec; border-radius: 6px; overflow: hidden; }
+.progress-fill { height: 100%; background: #2f6248; border-radius: 6px; transition: width 300ms ease; }
+.progress-caption { margin-top: 8px; font-size: 11px; color: var(--muted); }
+
+/* Plan Toolbar */
+.plan-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 20px; border-bottom: 1px solid var(--border); flex-wrap: wrap; background: #fafbf9; }
+.filter-tabs { display: flex; gap: 6px; flex-wrap: wrap; }
+.filter-tab { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 6px; font-size: 11px; font-weight: 500; text-decoration: none; color: #495e54; background: white; border: 1px solid #dce2db; transition: all 150ms; }
+.filter-tab:hover { background: #f0f4f1; color: var(--navy); }
+.filter-tab.is-active { background: var(--navy); color: white; border-color: var(--navy); font-weight: 600; }
+.filter-badge { display: inline-block; padding: 1px 6px; border-radius: 10px; font-size: 10px; background: rgba(0,0,0,0.06); }
+.filter-tab.is-active .filter-badge { background: rgba(255,255,255,0.25); color: white; }
+
+/* Due Date Pill */
+.due-date-pill { display: inline-flex; align-items: center; gap: 5px; padding: 3px 8px; border-radius: 5px; font-size: 11px; font-weight: 500; background: #f3f6f4; color: #3d5248; border: 1px solid #dde3df; white-space: nowrap; }
+.due-date-pill svg { width: 13px; height: 13px; }
+.due-date-pill--overdue { background: #fff0ee; color: #ad2f23; border-color: #f7cbc6; font-weight: 600; }
+.due-date-pill--empty { color: var(--muted); background: transparent; border: none; font-style: italic; }
+
+/* Quick Status Selector */
+.quick-status-form { display: inline-flex; align-items: center; gap: 6px; margin-top: 6px; }
+.quick-status-select { font-size: 11px; padding: 3px 6px; border-radius: 4px; border: 1px solid #cfd7d2; background: white; color: #324a3e; cursor: pointer; }
+.quick-status-select:focus { outline: none; border-color: var(--navy); }
+
+/* Collapsible Form Card */
+.collapsible-form-card { background: white; border: 1px solid var(--border); border-radius: 9px; margin-bottom: 28px; box-shadow: 0 2px 6px rgb(32 57 45 / 2%); overflow: hidden; }
+.collapsible-summary { padding: 16px 20px; font-weight: 600; font-size: 13px; color: var(--green); cursor: pointer; display: flex; align-items: center; justify-content: space-between; list-style: none; user-select: none; }
+.collapsible-summary::-webkit-details-marker { display: none; }
+.collapsible-summary-content { display: flex; align-items: center; gap: 10px; }
+.collapsible-summary-content svg { width: 18px; height: 18px; color: var(--navy); }
+.collapsible-summary-badge { font-size: 11px; font-weight: 500; color: var(--navy); }
+.collapsible-content { padding: 0 24px 24px; border-top: 1px solid #edf0ec; }
 
 /* Dialog */
 .confirm-dialog { max-width: 440px; padding: 26px; border: 1px solid var(--border); border-radius: 10px; background: white; box-shadow: 0 12px 36px rgb(7 55 99 / 15%); }
