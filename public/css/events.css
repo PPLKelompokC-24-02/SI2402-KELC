@@ -1,0 +1,1194 @@
+/* ============================================================
+   events.css — Career Event Mahasiswa (US-19)
+   ============================================================ */
+
+/* ================================================================
+   HERO BANNER
+   ================================================================ */
+.event-hero {
+    position: relative;
+    border-radius: 16px;
+    background: var(--navy);
+    color: white;
+    overflow: hidden;
+    margin-bottom: 0;
+}
+
+/* Dekorasi latar belakang */
+.event-hero-bg-shapes {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.event-hero-shape {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(168, 216, 209, 0.07);
+}
+
+.event-hero-shape--1 {
+    width: 380px;
+    height: 380px;
+    top: -120px;
+    right: -80px;
+}
+
+.event-hero-shape--2 {
+    width: 220px;
+    height: 220px;
+    bottom: -60px;
+    right: 200px;
+    background: rgba(168, 216, 209, 0.05);
+}
+
+.event-hero-shape--3 {
+    width: 160px;
+    height: 160px;
+    top: 20px;
+    right: 320px;
+    background: rgba(255, 255, 255, 0.03);
+}
+
+/* Inner layout */
+.event-hero-inner {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 180px;
+    gap: 32px;
+    align-items: center;
+    padding: 40px 44px 44px;
+}
+
+/* Kiri: copy */
+.event-hero-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.event-hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin: 0 0 18px;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1.4px;
+    color: #a8d8d1;
+    text-transform: uppercase;
+}
+
+.event-hero-eyebrow svg {
+    width: 13px;
+    height: 13px;
+    stroke-width: 1.8;
+}
+
+.event-hero-inner h1 {
+    margin: 0;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: clamp(30px, 2.8vw, 44px);
+    font-weight: 400;
+    line-height: 1.2;
+    letter-spacing: -.6px;
+    color: white;
+}
+
+.event-hero-inner h1 em {
+    font-style: normal;
+    color: #a8d8d1;
+}
+
+.event-hero-desc {
+    margin: 16px 0 0;
+    color: #c8dde8;
+    font-size: 12px;
+    line-height: 1.9;
+    max-width: 460px;
+}
+
+/* Category pills di dalam hero */
+.event-hero-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-top: 22px;
+}
+
+.event-hero-pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 13px;
+    border-radius: 20px;
+    border: 1px solid rgba(168, 216, 209, 0.3);
+    background: rgba(168, 216, 209, 0.08);
+    color: #c0dbd6;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.2px;
+    text-decoration: none;
+    transition: background 150ms, border-color 150ms, color 150ms;
+    white-space: nowrap;
+}
+
+.event-hero-pill:hover {
+    background: rgba(168, 216, 209, 0.18);
+    border-color: rgba(168, 216, 209, 0.6);
+    color: white;
+}
+
+.event-hero-pill--active {
+    background: rgba(168, 216, 209, 0.22);
+    border-color: #a8d8d1;
+    color: white;
+    font-weight: 600;
+}
+
+/* Kanan: dekorasi */
+.event-hero-right {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+}
+
+.event-hero-art-ring {
+    position: relative;
+    width: 128px;
+    height: 128px;
+    display: grid;
+    place-items: center;
+}
+
+.event-hero-art-ring::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 1px solid rgba(168, 216, 209, 0.25);
+    animation: event-pulse 3s ease-in-out infinite;
+}
+
+.event-hero-art-ring::after {
+    content: '';
+    position: absolute;
+    inset: 16px;
+    border-radius: 50%;
+    border: 1px solid rgba(168, 216, 209, 0.15);
+}
+
+.event-hero-art-ring svg {
+    width: 56px;
+    height: 56px;
+    stroke-width: 0.9;
+    color: rgba(168, 216, 209, 0.55);
+    animation: event-spin-slow 24s linear infinite;
+}
+
+.event-hero-art-label {
+    margin: 0;
+    font-size: 9px;
+    letter-spacing: 0.5px;
+    color: #7ba8bc;
+    text-align: center;
+}
+
+@keyframes event-spin-slow {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+}
+
+@keyframes event-pulse {
+    0%, 100% { opacity: 0.4; transform: scale(1); }
+    50%       { opacity: 0.8; transform: scale(1.04); }
+}
+
+/* Stats bar di bawah hero */
+.event-hero-stats-bar {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    padding: 18px 44px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(0, 0, 0, 0.12);
+}
+
+.event-hero-stat-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 28px 0 0;
+}
+
+.event-hero-stat-item:first-child {
+    padding-left: 0;
+}
+
+.event-hero-stat-num {
+    font-size: 22px;
+    font-weight: 700;
+    color: #a8d8d1;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+}
+
+.event-hero-stat-desc {
+    font-size: 11px;
+    color: #8aabb8;
+    line-height: 1.3;
+}
+
+.event-hero-stat-sep {
+    width: 1px;
+    height: 32px;
+    background: rgba(255, 255, 255, 0.1);
+    margin-right: 28px;
+    flex-shrink: 0;
+}
+
+/* ================================================================
+   SEARCH OVERLAY
+   ================================================================ */
+.event-search-overlay {
+    position: relative;
+    margin: -24px 32px 32px;
+    z-index: 10;
+}
+
+.event-search-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 10px 10px 20px;
+    background: white;
+    border: 1px solid #dce4e7;
+    border-radius: 10px;
+    box-shadow: 0 8px 32px rgba(7, 55, 99, 0.12);
+}
+
+.event-search-bar svg.search-icon {
+    width: 18px;
+    height: 18px;
+    color: #69869a;
+    flex-shrink: 0;
+}
+
+.event-search-bar input[type="search"] {
+    flex: 1;
+    min-width: 0;
+    padding: 8px 0;
+    border: 0;
+    font: inherit;
+    font-size: 12px;
+    color: var(--green);
+    background: transparent;
+    line-height: 1.6;
+}
+
+.event-search-bar input::placeholder {
+    color: #78887d;
+    opacity: 1;
+}
+
+.event-search-bar input:focus {
+    outline: 0;
+}
+
+.event-search-bar:focus-within {
+    border-color: #557f9d;
+    box-shadow: 0 0 0 3px rgba(7, 55, 99, 0.09), 0 8px 32px rgba(7, 55, 99, 0.12);
+}
+
+.event-search-bar-divider {
+    width: 1px;
+    height: 28px;
+    background: var(--border);
+    flex-shrink: 0;
+}
+
+.event-search-bar-category {
+    flex-shrink: 0;
+    min-width: 148px;
+}
+
+.event-search-bar-category select {
+    width: 100%;
+    appearance: none;
+    -webkit-appearance: none;
+    border: 0;
+    background: transparent
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23566a5c' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E")
+        no-repeat right 2px center / 13px 13px;
+    font: inherit;
+    font-size: 12px;
+    color: var(--green);
+    padding: 8px 22px 8px 6px;
+    cursor: pointer;
+}
+
+.event-search-bar-category select:focus {
+    outline: 0;
+}
+
+.event-search-bar-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.event-reset-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 8px 10px;
+    border-radius: 6px;
+    transition: color 150ms, background 150ms;
+    white-space: nowrap;
+}
+
+.event-reset-link:hover {
+    color: var(--navy);
+    background: #f0f4f1;
+}
+
+/* ================================================================
+   FILTER CHIPS & LIST HEADER
+   ================================================================ */
+.event-active-filters {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+}
+
+.event-filter-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    background: #eaf1f7;
+    color: var(--navy);
+    font-size: 11px;
+    font-weight: 500;
+}
+
+.event-filter-chip svg {
+    width: 12px;
+    height: 12px;
+}
+
+.event-list-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.event-list-title {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--green);
+}
+
+.event-results-count {
+    font-size: 11px;
+    color: var(--muted);
+}
+
+/* ================================================================
+   GRID KARTU EVENT
+   ================================================================ */
+.event-card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(295px, 1fr));
+    gap: 20px;
+}
+
+/* ================================================================
+   KARTU EVENT
+   ================================================================ */
+.event-card {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: white;
+    overflow: hidden;
+    transition: box-shadow 200ms, transform 200ms, border-color 200ms;
+}
+
+.event-card:hover {
+    box-shadow: 0 10px 36px rgba(7, 55, 99, 0.1);
+    transform: translateY(-4px);
+    border-color: #bdd1de;
+}
+
+/* Poster */
+.event-card-poster {
+    position: relative;
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: linear-gradient(135deg, #e4eff5 0%, #d5e9e1 100%);
+    text-decoration: none;
+}
+
+.event-card-poster img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 240ms ease;
+}
+
+.event-card:hover .event-card-poster img {
+    transform: scale(1.04);
+}
+
+.event-card-poster-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    height: 100%;
+    color: #9ab8ae;
+}
+
+.event-card-poster-placeholder svg {
+    width: 36px;
+    height: 36px;
+    stroke-width: 1.2;
+    color: #a8c8be;
+}
+
+.event-card-poster-placeholder span {
+    font-size: 10px;
+    color: #a8bdb7;
+    letter-spacing: 0.3px;
+}
+
+/* Badge kategori */
+.event-category-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    background: rgba(255, 255, 255, 0.92);
+    color: var(--navy);
+    border: 1px solid rgba(0, 0, 0, 0.07);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+}
+
+/* Body Kartu */
+.event-card-body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 18px 18px 14px;
+    gap: 12px;
+}
+
+.event-card-title {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.45;
+    color: var(--green);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.event-card-title a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.event-card-title a:hover {
+    color: var(--navy);
+}
+
+.event-card-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    margin-top: auto;
+}
+
+.event-card-meta-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 7px;
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.5;
+}
+
+.event-card-meta-item svg {
+    width: 13px;
+    height: 13px;
+    flex-shrink: 0;
+    color: #8aab97;
+    margin-top: 1px;
+}
+
+/* Footer Kartu */
+.event-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 12px 18px;
+    border-top: 1px solid #f0f4f2;
+}
+
+.event-card-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--navy);
+    text-decoration: none;
+    transition: gap 150ms;
+}
+
+.event-card-cta:hover {
+    gap: 8px;
+}
+
+.event-card-cta svg {
+    width: 13px;
+    height: 13px;
+}
+
+/* Tombol Daftar di kartu */
+.event-card-register-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 13px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--navy);
+    background: #eef5fb;
+    border: 1px solid #c8dff0;
+    text-decoration: none;
+    transition: background 150ms, border-color 150ms, color 150ms;
+    white-space: nowrap;
+}
+
+.event-card-register-btn:hover {
+    background: var(--navy);
+    border-color: var(--navy);
+    color: white;
+}
+
+.event-card-register-btn svg {
+    width: 10px;
+    height: 10px;
+    stroke-width: 2.2;
+}
+
+/* ================================================================
+   EMPTY STATE
+   ================================================================ */
+.event-empty {
+    padding: 72px 25px;
+    border: 1px dashed #c8d8d0;
+    border-radius: 14px;
+    text-align: center;
+    background: white;
+}
+
+.event-empty-icon {
+    display: grid;
+    place-items: center;
+    width: 72px;
+    height: 72px;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #edf3f8, #e4f0f4);
+    color: var(--navy);
+}
+
+.event-empty-icon svg {
+    width: 32px;
+    height: 32px;
+    stroke-width: 1.5;
+}
+
+.event-empty h3 {
+    margin: 0 0 10px;
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--green);
+}
+
+.event-empty p {
+    margin: 0 auto;
+    max-width: 420px;
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.9;
+}
+
+.event-empty > a,
+.event-empty > .career-button {
+    margin-top: 22px;
+}
+
+/* ================================================================
+   PAGINATION
+   ================================================================ */
+.event-pagination-info {
+    font-size: 12px;
+    color: var(--muted);
+}
+
+/* ================================================================
+   HALAMAN DETAIL — HERO HEADER
+   ================================================================ */
+.event-detail-hero {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 32px;
+    margin-bottom: 32px;
+    padding: 32px 36px;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+}
+
+.event-detail-hero-left {
+    flex: 1;
+    min-width: 0;
+}
+
+.event-detail-hero-title {
+    margin: 12px 0 8px;
+    font-size: clamp(22px, 2.5vw, 32px);
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -.5px;
+    color: var(--green);
+}
+
+.event-detail-hero-organizer {
+    margin: 0;
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.6;
+}
+
+.event-detail-hero-organizer strong {
+    color: #344d43;
+}
+
+/* Quick info bar */
+.event-detail-quick-info {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+    padding: 14px 18px;
+    background: #f7faf8;
+    border: 1px solid #e8eeeb;
+    border-radius: 10px;
+}
+
+.event-detail-quick-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 12px;
+    color: #4a6a58;
+}
+
+.event-detail-quick-item svg {
+    width: 14px;
+    height: 14px;
+    color: #7aab8e;
+    flex-shrink: 0;
+    stroke-width: 1.8;
+}
+
+.event-detail-quick-sep {
+    width: 1px;
+    height: 18px;
+    background: #d0ddd5;
+}
+
+/* CTA button di hero */
+.event-detail-hero-cta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.event-detail-cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 22px;
+    border-radius: 10px;
+    background: var(--navy);
+    color: white;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background 160ms, transform 160ms;
+}
+
+.event-detail-cta-btn:hover {
+    background: #0b487d;
+    transform: translateY(-1px);
+}
+
+.event-detail-cta-btn svg {
+    width: 15px;
+    height: 15px;
+    stroke-width: 2;
+}
+
+.event-detail-cta-note {
+    margin: 0;
+    font-size: 10px;
+    color: var(--muted);
+    text-align: right;
+}
+
+/* ================================================================
+   HALAMAN DETAIL — LAYOUT
+   ================================================================ */
+.event-detail-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.8fr) minmax(260px, 1fr);
+    gap: 24px;
+    align-items: start;
+}
+
+/* Sidebar kanan */
+.event-detail-sidebar {
+    display: flex;
+    flex-direction: column;
+}
+
+/* ================================================================
+   HALAMAN DETAIL — KARTU
+   ================================================================ */
+.event-detail-card {
+    padding: 26px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: white;
+    margin-bottom: 20px;
+}
+
+.event-detail-card:last-child {
+    margin-bottom: 0;
+}
+
+.event-detail-card-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid #f0f4f2;
+}
+
+.event-detail-card-header svg {
+    width: 16px;
+    height: 16px;
+    color: var(--green);
+    flex-shrink: 0;
+}
+
+.event-detail-card-header h2 {
+    margin: 0;
+    color: var(--green);
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* ================================================================
+   HALAMAN DETAIL — INFO LIST
+   ================================================================ */
+.event-info-list {
+    display: grid;
+    gap: 16px;
+}
+
+.event-info-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.event-info-icon-wrap {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 9px;
+    background: #f0f6f3;
+    flex-shrink: 0;
+}
+
+.event-info-icon-wrap svg {
+    width: 15px;
+    height: 15px;
+    color: var(--green);
+}
+
+.event-info-item-content {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    padding-top: 2px;
+}
+
+.event-info-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+    color: var(--muted);
+}
+
+.event-info-value {
+    font-size: 13px;
+    font-weight: 500;
+    color: #344d43;
+    line-height: 1.5;
+}
+
+/* ================================================================
+   HALAMAN DETAIL — POSTER
+   ================================================================ */
+.event-poster-frame {
+    width: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
+}
+
+.event-poster-frame img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.event-poster-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    padding: 56px 20px;
+    background: linear-gradient(135deg, #f4f8f6, #ebf3ef);
+    border: 1px dashed #c5d9cf;
+    border-radius: 12px;
+    text-align: center;
+    color: var(--muted);
+}
+
+.event-poster-placeholder svg {
+    width: 36px;
+    height: 36px;
+    stroke-width: 1.2;
+    color: #9ab8ae;
+}
+
+.event-poster-placeholder p {
+    margin: 0;
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+/* ================================================================
+   HALAMAN DETAIL — KOTAK PENDAFTARAN
+   ================================================================ */
+.event-registration-box {
+    margin-top: 24px;
+    padding: 22px;
+    background: linear-gradient(135deg, #f0f7ff 0%, #e6f1fc 100%);
+    border: 1px solid #c4dcf4;
+    border-radius: 12px;
+}
+
+.event-registration-box-inner {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 16px;
+}
+
+.event-registration-box-icon {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: rgba(7, 55, 99, 0.09);
+    flex-shrink: 0;
+}
+
+.event-registration-box-icon svg {
+    width: 18px;
+    height: 18px;
+    color: var(--navy);
+    stroke-width: 1.8;
+}
+
+.event-registration-box-label {
+    margin: 0 0 5px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--navy);
+}
+
+.event-registration-box-desc {
+    margin: 0;
+    font-size: 11px;
+    color: #4a6a8a;
+    line-height: 1.7;
+}
+
+.event-registration-btn {
+    width: 100%;
+    justify-content: center;
+}
+
+.event-no-registration {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 16px 18px;
+    background: #fafaf8;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-top: 24px;
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.65;
+}
+
+.event-no-registration svg {
+    width: 15px;
+    height: 15px;
+    flex-shrink: 0;
+    margin-top: 1px;
+    color: #a8bdb7;
+}
+
+/* ================================================================
+   HALAMAN DETAIL — DESKRIPSI
+   ================================================================ */
+.event-description {
+    font-size: 13px;
+    line-height: 1.9;
+    color: #344d43;
+    white-space: pre-line;
+}
+
+/* ================================================================
+   HALAMAN DETAIL — META ROW (back-compat)
+   ================================================================ */
+.event-detail-page-header {
+    margin-bottom: 28px;
+}
+
+.event-detail-page-header h1 {
+    margin: 8px 0 10px;
+    font-size: clamp(22px, 2.5vw, 32px);
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: -.5px;
+    color: var(--green);
+}
+
+.event-detail-meta-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.event-category-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    background: #eaf1f7;
+    color: var(--navy);
+    border: 1px solid #d0e3f0;
+}
+
+.event-category-pill svg {
+    width: 12px;
+    height: 12px;
+}
+
+.event-organizer-text {
+    font-size: 12px;
+    color: var(--muted);
+}
+
+.event-organizer-text strong {
+    color: #344d43;
+}
+
+/* ================================================================
+   RESPONSIVE
+   ================================================================ */
+@media (max-width: 1100px) {
+    .event-hero-inner {
+        grid-template-columns: minmax(0, 1fr) 140px;
+        padding: 36px 36px 40px;
+    }
+
+    .event-hero-art-ring {
+        width: 100px;
+        height: 100px;
+    }
+
+    .event-hero-art-ring svg {
+        width: 44px;
+        height: 44px;
+    }
+
+    .event-hero-art-label {
+        display: none;
+    }
+
+    .event-hero-stats-bar {
+        padding: 16px 36px;
+    }
+
+    .event-search-overlay {
+        margin: -22px 24px 30px;
+    }
+}
+
+@media (max-width: 900px) {
+    .event-detail-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .event-hero-inner {
+        grid-template-columns: 1fr;
+        padding: 32px 28px 36px;
+    }
+
+    .event-hero-right {
+        display: none;
+    }
+
+    .event-hero-stats-bar {
+        padding: 14px 28px;
+    }
+
+    .event-search-overlay {
+        margin: -20px 16px 28px;
+    }
+
+    .event-detail-hero {
+        flex-direction: column;
+        padding: 24px 24px;
+    }
+
+    .event-detail-hero-cta {
+        align-items: stretch;
+        width: 100%;
+    }
+
+    .event-detail-cta-btn {
+        justify-content: center;
+    }
+
+    .event-detail-cta-note {
+        text-align: center;
+    }
+}
+
+@media (max-width: 680px) {
+    .event-card-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .event-search-bar {
+        flex-wrap: wrap;
+    }
+
+    .event-search-bar-divider {
+        display: none;
+    }
+
+    .event-search-bar-category {
+        min-width: unset;
+        flex: 1;
+        border-top: 1px solid var(--border);
+        padding-top: 8px;
+    }
+
+    .event-hero-pills {
+        display: none;
+    }
+
+    .event-hero-stat-desc {
+        display: none;
+    }
+
+    .event-hero-stat-sep {
+        margin-right: 20px;
+    }
+
+    .event-hero-stat-item {
+        padding-right: 20px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .event-card,
+    .event-card-poster img,
+    .event-hero-art-ring svg,
+    .event-hero-art-ring::before {
+        transition: none;
+        animation: none;
+    }
+}
