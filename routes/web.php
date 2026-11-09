@@ -1,11 +1,12 @@
 <?php
 
 use App\Http\Controllers\Web\Admin\ActionPlanTemplateController as AdminActionPlanTemplateController;
-use App\Http\Controllers\Web\Admin\CareerEventController;
+use App\Http\Controllers\Web\Admin\CareerEventController as AdminCareerEventController;
 use App\Http\Controllers\Web\Admin\CareerPathController;
 use App\Http\Controllers\Web\Admin\ProfessionController;
 use App\Http\Controllers\Web\AuthenticationController;
 use App\Http\Controllers\Web\CareerActionPlanController;
+use App\Http\Controllers\Web\CareerEventController;
 use App\Http\Controllers\Web\CareerExplorationController;
 use App\Http\Controllers\Web\CvBuilderController;
 use App\Http\Controllers\Web\FavoriteProfessionController;
@@ -55,6 +56,12 @@ Route::middleware(['auth:web', 'role:mahasiswa'])->group(function () {
         Route::put('/', [CvBuilderController::class, 'update'])->name('update');
         Route::get('preview', [CvBuilderController::class, 'preview'])->name('preview');
     });
+
+    Route::prefix('events')->name('events.')->group(function () {
+        Route::get('/', [CareerEventController::class, 'index'])->name('index');
+        Route::get('{event}/poster', [CareerEventController::class, 'poster'])->whereNumber('event')->name('poster');
+        Route::get('{event}', [CareerEventController::class, 'show'])->whereNumber('event')->name('show');
+    });
 });
 
 Route::prefix('admin')->name('admin.')->middleware(['auth:web', 'role:admin'])->group(function () {
@@ -64,8 +71,8 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:web', 'role:admin'])->
     Route::post('action-templates/{action_template}/toggle-status', [AdminActionPlanTemplateController::class, 'toggleStatus'])->name('action-templates.toggle-status')->whereNumber('action_template');
     Route::resource('action-templates', AdminActionPlanTemplateController::class)->parameters(['action-templates' => 'action_template'])->whereNumber('action_template');
 
-    Route::get('events/{event}/poster', [CareerEventController::class, 'poster'])->whereNumber('event')->name('events.poster');
-    Route::resource('events', CareerEventController::class)->whereNumber('event');
+    Route::get('events/{event}/poster', [AdminCareerEventController::class, 'poster'])->whereNumber('event')->name('events.poster');
+    Route::resource('events', AdminCareerEventController::class)->whereNumber('event');
 
     Route::get('professions/{profession}/career-paths', [CareerPathController::class, 'stages'])->whereNumber('profession')->name('professions.career-paths.index');
     Route::post('professions/{profession}/career-paths', [CareerPathController::class, 'store'])->whereNumber('profession')->name('professions.career-paths.store');
