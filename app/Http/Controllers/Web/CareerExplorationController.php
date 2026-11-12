@@ -71,7 +71,11 @@ class CareerExplorationController extends Controller
 
     public function show(ExploreProfessionsRequest $request, int $profession): View
     {
-        $profession = $this->visible()->with(['careerCategory', 'competencies'])->findOrFail($profession);
+        $profession = $this->visible()->with([
+            'careerCategory',
+            'competencies',
+            'careerPathStages.competencies',
+        ])->findOrFail($profession);
         Gate::authorize('view', $profession);
         $user = $request->user('web');
 
