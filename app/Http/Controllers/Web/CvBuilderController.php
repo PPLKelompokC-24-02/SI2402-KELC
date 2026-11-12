@@ -6,9 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateCurriculumVitaeRequest;
 use App\Models\CurriculumVitae;
 use App\Models\User;
+use App\Services\GenerateCvPdf;
 use App\Support\AppLayout;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Str;
 use Illuminate\View\View;
 
 class CvBuilderController extends Controller
@@ -50,10 +53,30 @@ class CvBuilderController extends Controller
     {
         $user = $request->user('web');
         $cv = $this->getOrCreateCv($user);
+        $template = $request->query('template', $cv->template ?: 'ats-classic');
 
         return view('cv.preview', [
             ...AppLayout::data($user),
             'cv' => $cv,
+            'template' => $template,
+        ]);
+    }
+
+    public function download(Request $request, GenerateCvPdf $pdfService): Response
+    {
+        $user = $request->user('web');
+        $cv = $this->getOrCreateCv($user);
+        $template = $request->query('template', $cv->template ?: 'ats-classic');
+
+        $pdfContent = $pdfService->generate($cv, $template);
+        $slug = Str::slug($cv->full_name, '_') ?: 'mahasiswa';
+        $filename = "CV_{$slug}.pdf";
+
+        return response($pdfContent, 200, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'attachment; filename="' . $filename . '"',
+            'Content-Length' => strlen($pdfContent),
+            'Cache-Control' => 'no-cache, private',
         ]);
     }
 

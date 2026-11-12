@@ -796,3 +796,368 @@ a.cv-contact-chip:hover {
     color: #485c52;
     line-height: 1.6;
 }
+
+/* =========================================
+   US-21: TEMPLATE CARDS & EXPORT PANEL (CV BUILDER MENU)
+   ========================================= */
+
+.cv-export-card {
+    background: #ffffff;
+    border: 1px solid #dce4de;
+    border-radius: 12px;
+    padding: 26px 28px;
+    margin-bottom: 24px;
+    box-shadow: 0 2px 10px rgba(32, 57, 45, 0.04);
+}
+
+.cv-export-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 18px;
+    padding-bottom: 14px;
+    border-bottom: 1.5px solid #edf2ee;
+    flex-wrap: wrap;
+}
+
+.cv-export-header h2 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--green);
+}
+
+.cv-export-header h2 svg {
+    width: 20px;
+    height: 20px;
+    color: var(--navy);
+}
+
+.cv-export-header p {
+    margin: 6px 0 0;
+    color: #55695e;
+    font-size: 12.5px;
+    line-height: 1.5;
+}
+
+.templates-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 18px;
+    margin-top: 14px;
+}
+
+@media (min-width: 768px) {
+    .templates-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.template-card {
+    border: 1.5px solid #dce5df;
+    border-radius: 10px;
+    padding: 20px;
+    background: #fafbfa;
+    transition: all 160ms ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.template-card:hover {
+    border-color: #337c9c;
+    background: #ffffff;
+    box-shadow: 0 4px 14px rgba(7, 55, 99, 0.08);
+}
+
+.template-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.template-card-title {
+    margin: 0;
+    font-size: 14.5px;
+    font-weight: 700;
+    color: var(--green);
+}
+
+.template-card-badge {
+    display: inline-block;
+    padding: 3px 9px;
+    border-radius: 12px;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+}
+
+.template-card-badge--ats {
+    background: #eef2f6;
+    color: var(--navy);
+    border: 1px solid #d4e0eb;
+}
+
+.template-card-badge--modern {
+    background: #e8f5e9;
+    color: #1e5e34;
+    border: 1px solid #cce5d4;
+}
+
+.template-card-desc {
+    margin: 0 0 16px;
+    font-size: 12px;
+    line-height: 1.6;
+    color: #4f6358;
+}
+
+.template-card-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    padding-top: 14px;
+    border-top: 1px dashed #dce5df;
+}
+
+/* =========================================
+   US-21: PREVIEW TOOLBAR & ATS / MODERN PAPER
+   ========================================= */
+
+.preview-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+}
+
+.preview-template-switch {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #ffffff;
+    padding: 6px 10px;
+    border: 1px solid #d4ddd7;
+    border-radius: 24px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.preview-switch-label {
+    font-size: 11.5px;
+    font-weight: 600;
+    color: #5b6f63;
+    padding-left: 6px;
+}
+
+.template-switch-pill {
+    padding: 6px 14px;
+    border-radius: 18px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #3b5046;
+    text-decoration: none;
+    transition: all 140ms ease;
+}
+
+.template-switch-pill:hover {
+    background: #f0f5f2;
+    color: var(--navy);
+}
+
+.template-switch-pill.is-active {
+    background: var(--navy);
+    color: #ffffff;
+}
+
+.ats-paper {
+    background: #ffffff;
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 48px 52px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+    border: 1px solid #dce4de;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #1a1a1a;
+    line-height: 1.5;
+}
+
+/* ATS Classic Paper */
+.ats-header {
+    text-align: center;
+    margin-bottom: 22px;
+    border-bottom: 1.5px solid #222222;
+    padding-bottom: 16px;
+}
+
+.ats-name {
+    margin: 0 0 6px;
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+    color: #111111;
+}
+
+.ats-title {
+    margin: 0 0 10px;
+    font-size: 14px;
+    color: #444444;
+    font-weight: 500;
+}
+
+.ats-contact-line {
+    font-size: 11.5px;
+    color: #333333;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px 14px;
+}
+
+.ats-contact-item a {
+    color: #111111;
+    text-decoration: underline;
+}
+
+.ats-section {
+    margin-bottom: 20px;
+}
+
+.ats-section-title {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .8px;
+    color: #111111;
+    margin: 0 0 10px;
+    border-bottom: 1px solid #444444;
+    padding-bottom: 4px;
+}
+
+.ats-entry {
+    margin-bottom: 14px;
+}
+
+.ats-entry-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: 12px;
+}
+
+.ats-entry-title {
+    font-weight: 700;
+    color: #111111;
+}
+
+.ats-entry-institution {
+    font-style: italic;
+    color: #333333;
+}
+
+.ats-entry-date {
+    font-size: 11.5px;
+    color: #444444;
+    text-align: right;
+    white-space: nowrap;
+}
+
+.ats-entry-desc {
+    margin: 4px 0 0;
+    font-size: 11.5px;
+    color: #333333;
+    line-height: 1.6;
+}
+
+.ats-skills-line {
+    font-size: 11.5px;
+    margin-bottom: 6px;
+    line-height: 1.6;
+}
+
+.ats-skills-line strong {
+    color: #111111;
+}
+
+/* Modern Paper Specifics */
+.modern-paper .modern-header-banner {
+    background: #073763;
+    color: #ffffff;
+    margin: -48px -52px 24px -52px;
+    padding: 36px 52px;
+}
+
+.modern-paper .modern-name {
+    margin: 0 0 6px;
+    font-size: 27px;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: -.4px;
+}
+
+.modern-paper .modern-headline {
+    margin: 0;
+    font-size: 14px;
+    color: #cfe1f0;
+    font-weight: 500;
+}
+
+.modern-paper .modern-contacts-strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 16px;
+    padding-bottom: 16px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #dce4de;
+    font-size: 11.5px;
+    color: #40544c;
+}
+
+.modern-paper .modern-contacts-strip a {
+    color: #073763;
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+.modern-paper .ats-section-title {
+    color: #073763;
+    border-bottom: 1.5px solid #073763;
+}
+
+/* Print Rules */
+@media print {
+    body {
+        background: #ffffff !important;
+        color: #000000 !important;
+    }
+    .app-topbar,
+    .app-sidebar,
+    .skip-link,
+    .sidebar-backdrop,
+    .preview-toolbar,
+    .cv-heading,
+    .cv-eyebrow,
+    .back-link,
+    .preview-template-switch {
+        display: none !important;
+    }
+    .app-main {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    .ats-paper {
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        box-shadow: none !important;
+        border: none !important;
+    }
+}

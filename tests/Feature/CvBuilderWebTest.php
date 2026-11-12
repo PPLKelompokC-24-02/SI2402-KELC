@@ -13,6 +13,7 @@ class CvBuilderWebTest extends ApiTestCase
         $this->get(route('cv.edit'))->assertRedirect(route('login'));
         $this->put(route('cv.update'), [])->assertRedirect(route('login'));
         $this->get(route('cv.preview'))->assertRedirect(route('login'));
+        $this->get(route('cv.download'))->assertRedirect(route('login'));
     }
 
     public function test_admin_and_assessor_cannot_access_student_cv_builder(): void
@@ -23,6 +24,10 @@ class CvBuilderWebTest extends ApiTestCase
 
         $this->actingAs($this->user('assessor'), 'web')
             ->get(route('cv.index'))
+            ->assertForbidden();
+
+        $this->actingAs($this->user('admin'), 'web')
+            ->get(route('cv.download'))
             ->assertForbidden();
     }
 
@@ -35,12 +40,16 @@ class CvBuilderWebTest extends ApiTestCase
         $response->assertOk()
             ->assertViewIs('cv.index')
             ->assertSee('CV Builder')
-            ->assertSee('Edit Informasi CV')
+            ->assertSee('Pratinjau CV')
+            ->assertSee('Unduh CV (PDF)')
+            ->assertSee('Pratinjau &amp; Unduh CV Mahasiswa', false)
+            ->assertSee('ATS-Friendly Classic')
+            ->assertSee('Modern Professional')
             ->assertSee('Pendidikan')
             ->assertSee('Keterampilan')
             ->assertSee('Pengalaman (Kerja, Magang, Organisasi)')
-            ->assertSee('Proyek & Portofolio')
-            ->assertSee('Sertifikasi & Lisensi');
+            ->assertSee('Proyek &amp; Portofolio', false)
+            ->assertSee('Sertifikasi &amp; Lisensi', false);
 
         // Memastikan CV terbuat otomatis untuk mahasiswa
         $this->assertDatabaseHas('curriculum_vitaes', [
@@ -61,10 +70,10 @@ class CvBuilderWebTest extends ApiTestCase
             ->assertSee('1. Data Profil')
             ->assertSee('2. Informasi Kontak')
             ->assertSee('3. Riwayat Pendidikan')
-            ->assertSee('4. Keterampilan & Keahlian')
+            ->assertSee('4. Keterampilan &amp; Keahlian', false)
             ->assertSee('5. Pengalaman (Kerja, Magang, Organisasi)')
-            ->assertSee('6. Proyek & Portofolio')
-            ->assertSee('7. Sertifikasi & Lisensi')
+            ->assertSee('6. Proyek &amp; Portofolio', false)
+            ->assertSee('7. Sertifikasi &amp; Lisensi', false)
             ->assertSee('Simpan Perubahan CV');
     }
 
@@ -170,7 +179,7 @@ class CvBuilderWebTest extends ApiTestCase
         $response->assertSessionHasErrors(['full_name', 'email']);
     }
 
-    public function test_mahasiswa_can_view_ats_preview_page(): void
+    public function test_mahasiswa_can_view_preview_page(): void
     {
         $student = $this->user('mahasiswa');
 
@@ -178,11 +187,78 @@ class CvBuilderWebTest extends ApiTestCase
 
         $response->assertOk()
             ->assertViewIs('cv.preview')
-            ->assertSee('Pratinjau CV ATS')
-            ->assertSee('Cetak / Simpan PDF')
+            ->assertSee('Kembali ke CV Builder')
+            ->assertSee('Unduh File PDF')
             ->assertSee('Ringkasan Profesional')
             ->assertSee('Pendidikan')
-            ->assertSee('Pengalaman Kerja & Organisasi');
+            ->assertSee('Pengalaman Kerja &amp; Organisasi', false);
+    }
+
+    public function test_mahasiswa_can_preview_with_modern_template(): void
+    {
+        $student = $this->user('mahasiswa');
+
+        $response = $this->actingAs($student, 'web')->get(route('cv.preview', ['template' => 'modern']));
+
+        $response->assertOk()
+            ->assertViewIs('cv.preview')
+            ->assertSee('modern-paper')
+            ->assertSee('Modern Navy');
+    }
+
+    public function test_mahasiswa_can_download_valid_pdf_cv(): void
+    {
+        $student = $this->user('mahasiswa');
+
+        $response = $this->actingAs($student, 'web')->get(route('cv.download'));
+
+        $response->assertOk();
+        $response->assertHeader('Content-Type', 'application/pdf');
+        $this->assertStringContainsString('attachment; filename="CV_', $response->headers->get('Content-Disposition'));
+
+        $content = $response->getContent();
+        // Validasi struktur biner PDF
+        $this->assertStringStartsWith('%PDF-1.4', $content);
+        $this->assertStringContainsString('%%EOF', $content);
+        $this->assertStringContainsString($student->name, $content);
+    }
+
+    public function test_mahasiswa_can_download_modern_template_pdf(): void
+    {
+        $student = $this->user('mahasiswa');
+
+        $response = $this->actingAs($student, 'web')->get(route('cv.download', ['template' => 'modern']));
+
+        $response->assertOk();
+        $response->assertHeader('Content-Type', 'application/pdf');
+
+        $content = $response->getContent();
+        $this->assertStringStartsWith('%PDF-1.4', $content);
+        $this->assertStringContainsString('%%EOF', $content);
+    }
+
+    public function test_student_downloads_only_their_own_cv_data(): void
+    {
+        $student1 = $this->user('mahasiswa');
+        $student2 = User::factory()->create([
+            'email' => 'student_other@careercompass.test',
+            'role_id' => $student1->role_id,
+            'name' => 'Budi Santoso Lain',
+        ]);
+
+        // Student 1 mengupdate namanya
+        $this->actingAs($student1, 'web')->put(route('cv.update'), [
+            'full_name' => 'Siswa Pertama Eksklusif',
+            'email' => 'siswa1@careercompass.test',
+        ]);
+
+        // Student 2 mengunduh PDF
+        $response = $this->actingAs($student2, 'web')->get(route('cv.download'));
+        $content = $response->getContent();
+
+        // PDF student 2 memuat namanya sendiri dan tidak memuat nama student 1
+        $this->assertStringContainsString('Budi Santoso Lain', $content);
+        $this->assertStringNotContainsString('Siswa Pertama Eksklusif', $content);
     }
 
     public function test_empty_rows_are_sanitized_and_filtered_out(): void
@@ -252,4 +328,3 @@ class CvBuilderWebTest extends ApiTestCase
             ->assertSee('CV Builder');
     }
 }
-
