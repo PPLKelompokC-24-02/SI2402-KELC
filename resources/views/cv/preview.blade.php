@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Pratinjau CV ATS — Career Compass')
+@section('title', 'Pratinjau & Unduh CV — Career Compass')
 
 @push('head')
 <link rel="stylesheet" href="{{ asset('css/cv-builder.css') }}?v={{ filemtime(public_path('css/cv-builder.css')) }}">
@@ -8,59 +8,106 @@
 @section('content')
 <div class="cv-page">
     <div class="preview-toolbar">
-        <div>
+        <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
             <a href="{{ route('cv.index') }}" class="back-link" style="margin-bottom:0;">
                 <x-app.icon name="back" />
                 <span>Kembali ke CV Builder</span>
             </a>
+
+            <!-- Switcher Template -->
+            <div class="preview-template-switch">
+                <span class="preview-switch-label">Template:</span>
+                <a href="{{ route('cv.preview', ['template' => 'ats-classic']) }}" class="template-switch-pill {{ ($template ?? 'ats-classic') !== 'modern' ? 'is-active' : '' }}">
+                    ATS Classic
+                </a>
+                <a href="{{ route('cv.preview', ['template' => 'modern']) }}" class="template-switch-pill {{ ($template ?? 'ats-classic') === 'modern' ? 'is-active' : '' }}">
+                    Modern Navy
+                </a>
+            </div>
         </div>
-        <div style="display:flex;gap:10px;">
+
+        <div style="display:flex; gap:10px; align-items: center; flex-wrap: wrap;">
             <a href="{{ route('cv.edit') }}" class="button button--outline">
                 <x-app.icon name="edit" />
                 <span>Edit Informasi CV</span>
             </a>
-            <button type="button" class="button button--primary" onclick="window.print()">
-                <x-app.icon name="download" />
-                <span>Cetak / Simpan PDF</span>
+            <button type="button" class="button button--outline" onclick="window.print()">
+                <x-app.icon name="document" />
+                <span>Cetak</span>
             </button>
+            <a href="{{ route('cv.download', ['template' => $template ?? 'ats-classic']) }}" class="button button--primary">
+                <x-app.icon name="download" />
+                <span>Unduh File PDF</span>
+            </a>
         </div>
     </div>
 
-    <!-- Paper Sheet ATS View -->
-    <div class="ats-paper" id="cv-paper">
-        <!-- ATS Header -->
-        <header class="ats-header">
-            <h1 class="ats-name">{{ $cv->full_name }}</h1>
-            @if ($cv->headline)
-                <div class="ats-title">{{ $cv->headline }}</div>
-            @endif
-            <div class="ats-contact-line">
+    <!-- Paper Sheet View -->
+    <div class="ats-paper {{ ($template ?? 'ats-classic') === 'modern' ? 'modern-paper' : '' }}" id="cv-paper">
+        @if (($template ?? 'ats-classic') === 'modern')
+            <!-- Modern Header -->
+            <header class="modern-header-banner">
+                <h1 class="modern-name">{{ $cv->full_name }}</h1>
+                @if ($cv->headline)
+                    <div class="modern-headline">{{ $cv->headline }}</div>
+                @endif
+            </header>
+
+            <div class="modern-contacts-strip">
                 @if ($cv->phone)
-                    <span class="ats-contact-item">{{ $cv->phone }}</span>
+                    <span>{{ $cv->phone }}</span>
                 @endif
                 @if ($cv->email)
-                    <span class="ats-contact-item">{{ $cv->email }}</span>
+                    <span>• {{ $cv->email }}</span>
                 @endif
                 @if ($cv->address)
-                    <span class="ats-contact-item">{{ $cv->address }}</span>
+                    <span>• {{ $cv->address }}</span>
                 @endif
                 @if ($cv->linkedin_url)
-                    <span class="ats-contact-item">
-                        <a href="{{ $cv->linkedin_url }}" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-                    </span>
+                    <span>• <a href="{{ $cv->linkedin_url }}" target="_blank" rel="noopener noreferrer">LinkedIn</a></span>
                 @endif
                 @if ($cv->portfolio_url)
-                    <span class="ats-contact-item">
-                        <a href="{{ $cv->portfolio_url }}" target="_blank" rel="noopener noreferrer">Portofolio</a>
-                    </span>
+                    <span>• <a href="{{ $cv->portfolio_url }}" target="_blank" rel="noopener noreferrer">Portofolio</a></span>
                 @endif
                 @if ($cv->github_url)
-                    <span class="ats-contact-item">
-                        <a href="{{ $cv->github_url }}" target="_blank" rel="noopener noreferrer">GitHub</a>
-                    </span>
+                    <span>• <a href="{{ $cv->github_url }}" target="_blank" rel="noopener noreferrer">GitHub</a></span>
                 @endif
             </div>
-        </header>
+        @else
+            <!-- ATS Classic Header -->
+            <header class="ats-header">
+                <h1 class="ats-name">{{ $cv->full_name }}</h1>
+                @if ($cv->headline)
+                    <div class="ats-title">{{ $cv->headline }}</div>
+                @endif
+                <div class="ats-contact-line">
+                    @if ($cv->phone)
+                        <span class="ats-contact-item">{{ $cv->phone }}</span>
+                    @endif
+                    @if ($cv->email)
+                        <span class="ats-contact-item">{{ $cv->email }}</span>
+                    @endif
+                    @if ($cv->address)
+                        <span class="ats-contact-item">{{ $cv->address }}</span>
+                    @endif
+                    @if ($cv->linkedin_url)
+                        <span class="ats-contact-item">
+                            <a href="{{ $cv->linkedin_url }}" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                        </span>
+                    @endif
+                    @if ($cv->portfolio_url)
+                        <span class="ats-contact-item">
+                            <a href="{{ $cv->portfolio_url }}" target="_blank" rel="noopener noreferrer">Portofolio</a>
+                        </span>
+                    @endif
+                    @if ($cv->github_url)
+                        <span class="ats-contact-item">
+                            <a href="{{ $cv->github_url }}" target="_blank" rel="noopener noreferrer">GitHub</a>
+                        </span>
+                    @endif
+                </div>
+            </header>
+        @endif
 
         <!-- Ringkasan Profesional -->
         @if ($cv->summary)

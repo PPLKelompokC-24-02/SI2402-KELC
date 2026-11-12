@@ -15,9 +15,17 @@
             <p>Susun, kelola, dan perbarui data profil, pendidikan, keterampilan, pengalaman, proyek, dan sertifikasi Anda untuk menghasilkan CV profesional.</p>
         </div>
         <div class="cv-heading-actions">
-            <a href="{{ route('cv.edit') }}" class="button button--primary">
+            <a href="{{ route('cv.preview') }}" class="button button--outline">
+                <x-app.icon name="eye" />
+                <span>Pratinjau CV</span>
+            </a>
+            <a href="{{ route('cv.download') }}" class="button button--primary">
+                <x-app.icon name="download" />
+                <span>Unduh CV (PDF)</span>
+            </a>
+            <a href="{{ route('cv.edit') }}" class="button button--outline">
                 <x-app.icon name="edit" />
-                <span>Edit Informasi CV</span>
+                <span>Edit Informasi</span>
             </a>
         </div>
     </div>
@@ -28,6 +36,77 @@
             <div>{{ session('status') }}</div>
         </div>
     @endif
+
+    <!-- US-21: Panel Pratinjau & Unduh CV -->
+    <section class="cv-export-card" aria-labelledby="heading-cv-export">
+        <div class="cv-export-header">
+            <div>
+                <h2 id="heading-cv-export">
+                    <x-app.icon name="document" />
+                    <span>Pratinjau &amp; Unduh CV Mahasiswa</span>
+                </h2>
+                <p>Pilih template CV yang sesuai, lihat pratinjau dokumen berdasarkan data terbaru Anda, atau unduh langsung dalam format PDF resmi.</p>
+            </div>
+            <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                <a href="{{ route('cv.preview') }}" class="button button--outline button--small">
+                    <x-app.icon name="eye" />
+                    <span>Buka Pratinjau</span>
+                </a>
+                <a href="{{ route('cv.download') }}" class="button button--primary button--small">
+                    <x-app.icon name="download" />
+                    <span>Unduh PDF Langsung</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="templates-grid">
+            <!-- Template 1: ATS-Friendly Classic -->
+            <article class="template-card">
+                <div>
+                    <div class="template-card-header">
+                        <h3 class="template-card-title">ATS-Friendly Classic</h3>
+                        <span class="template-card-badge template-card-badge--ats">Standar ATS</span>
+                    </div>
+                    <p class="template-card-desc">
+                        Format minimalis hitam-putih dengan tipografi terstandar. Sangat optimal untuk sistem seleksi otomatis (ATS) dan pendaftaran kerja formal.
+                    </p>
+                </div>
+                <div class="template-card-actions">
+                    <a href="{{ route('cv.preview', ['template' => 'ats-classic']) }}" class="button button--outline button--small">
+                        <x-app.icon name="eye" />
+                        <span>Pratinjau ATS</span>
+                    </a>
+                    <a href="{{ route('cv.download', ['template' => 'ats-classic']) }}" class="button button--primary button--small">
+                        <x-app.icon name="download" />
+                        <span>Unduh PDF ATS</span>
+                    </a>
+                </div>
+            </article>
+
+            <!-- Template 2: Modern Professional -->
+            <article class="template-card">
+                <div>
+                    <div class="template-card-header">
+                        <h3 class="template-card-title">Modern Professional</h3>
+                        <span class="template-card-badge template-card-badge--modern">Modern Navy</span>
+                    </div>
+                    <p class="template-card-desc">
+                        Format elegan dengan aksen warna navy, garis pemisah tegas, dan tata letak kontemporer. Cocok untuk magang, portofolio, dan pendaftaran beasiswa.
+                    </p>
+                </div>
+                <div class="template-card-actions">
+                    <a href="{{ route('cv.preview', ['template' => 'modern']) }}" class="button button--outline button--small">
+                        <x-app.icon name="eye" />
+                        <span>Pratinjau Modern</span>
+                    </a>
+                    <a href="{{ route('cv.download', ['template' => 'modern']) }}" class="button button--primary button--small">
+                        <x-app.icon name="download" />
+                        <span>Unduh PDF Modern</span>
+                    </a>
+                </div>
+            </article>
+        </div>
+    </section>
 
     <!-- Kartu Profil & Kontak Utama -->
     <article class="cv-profile-card">
@@ -325,16 +404,24 @@
         </section>
     </div>
 
-    <!-- Banner Ajak Edit -->
+    <!-- Banner Ajak Pratinjau & Unduh -->
     <div class="cv-cta-banner">
         <div class="cv-cta-content">
-            <h3>Ingin Memperbarui atau Melengkapi Data CV Anda?</h3>
-            <p>Pastikan seluruh informasi profil, pendidikan, riwayat pengalaman, dan keahlian Anda selalu up-to-date untuk memudahkan proses lamaran magang atau pekerjaan.</p>
+            <h3>Dokumen CV Anda Siap Digunakan</h3>
+            <p>Pastikan seluruh informasi profil, riwayat pendidikan, pengalaman, dan keahlian sudah lengkap. Anda dapat melihat pratinjau lembar CV atau mengunduhnya langsung dalam format PDF resmi.</p>
         </div>
-        <div>
-            <a href="{{ route('cv.edit') }}" class="button button--primary">
+        <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+            <a href="{{ route('cv.preview') }}" class="button button--outline">
+                <x-app.icon name="eye" />
+                <span>Lihat Pratinjau</span>
+            </a>
+            <a href="{{ route('cv.download') }}" class="button button--primary">
+                <x-app.icon name="download" />
+                <span>Unduh CV (PDF)</span>
+            </a>
+            <a href="{{ route('cv.edit') }}" class="button button--outline">
                 <x-app.icon name="edit" />
-                <span>Edit Informasi CV Mahasiswa</span>
+                <span>Edit Informasi</span>
             </a>
         </div>
     </div>

@@ -55,6 +55,7 @@ Route::middleware(['auth:web', 'role:mahasiswa'])->group(function () {
         Route::get('edit', [CvBuilderController::class, 'edit'])->name('edit');
         Route::put('/', [CvBuilderController::class, 'update'])->name('update');
         Route::get('preview', [CvBuilderController::class, 'preview'])->name('preview');
+        Route::get('download', [CvBuilderController::class, 'download'])->name('download');
     });
 
     Route::prefix('events')->name('events.')->group(function () {
